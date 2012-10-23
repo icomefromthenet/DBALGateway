@@ -1,0 +1,30 @@
+{
+    "name": "icomefromthenet/dbal-gateway",
+    "description": "Table Gateway for Doctrine DBAL",
+    "keywords": [ "doctine","database","gateway" ],
+    "homepage": "http://github.com/icomefromthenet/DBALGateway",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lewis Dyer",
+            "email": "getintouch@icomefromthenet.com",
+            "homepage": "www.icomefromthenet.com"
+        }
+    ],
+
+    "require-dev" : {
+        "icomefromthenet/faker" : "1.0.3.4",
+        "icomefromthenet/migration" : "dev-master"
+    },
+    "require" : {
+        "symfony/event-dispatcher" : "2.1.*",
+        "doctrine/dbal" : "2.3.*" 
+    },
+     "autoload": {
+        "psr-0": {
+            "DBALGateway": "src/"
+        }
+    }
+    
+}

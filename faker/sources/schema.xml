@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<schema name="dbal_gateway">
+ 
+ <writer platform="mysql" format="phpunit" />
+ 
+ 
+ <table name="users" generate="100">
+  
+  <column name="id" type="integer">
+   <datatype name="autoincrement" />
+  </column>
+  <column name="username" type="string">
+   <datatype name="regex">
+    <option name="format" value="\w{10,32}" />
+   </datatype>
+  </column>
+  <column name="first_name" type="string">
+   <datatype name="regex">
+    <option name="format" value="\w{10,32}" />
+   </datatype>
+  </column>
+  <column name="last_name" type="string">
+    <datatype name="regex">
+     <option name="format" value="\w{10,32}" />
+    </datatype>
+  </column>
+  <column name="dte_created" type="datetime">
+    <datatype name="date">
+        <option name="start"  value="today" />
+        <option name="modify" value="+1 week" />
+        <option name="max"    value="today +10 weeks" />
+    </datatype>
+  </column>
+  <column name="dte_updated" type="datetime">
+    <datatype name="date">
+        <option name="start"  value="today" />
+        <option name="modify" value="+1 week" />
+        <option name="max"    value="today +10 weeks" />
+    </datatype>
+  </column>
+ </table>
+</schema>
