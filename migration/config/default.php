@@ -6,7 +6,7 @@ return array (
   'type' => 'pdo_mysql',
   'schema' => 'dbal_gateway',
   'user' => 'root',
-  'password' => 'vagrant',
+  'password' => '',
   'host' => 'localhost',
   'port' => 3306,
   'migration_table' => 'migrations_data',

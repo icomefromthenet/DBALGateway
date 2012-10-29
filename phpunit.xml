@@ -6,14 +6,14 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         processIsolation="false"
+         processIsolation="true"
          syntaxCheck="false"
          bootstrap="vendor/autoload.php"
 >
     <php>
         <var name="DB_DSN" value="mysql:dbname=dbal_gateway;host=localhost" />
         <var name="DB_USER" value="root" />
-        <var name="DB_PASSWD" value="vagrant" />
+        <var name="DB_PASSWD" value="" />
         <var name="DB_DBNAME" value="dbal_gateway" />
     </php>
     <testsuites>

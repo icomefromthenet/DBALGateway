@@ -1,0 +1,12 @@
+language: php
+php:
+  - 5.4
+  - 5.3
+   
+before_script:
+  - composer install --dev
+  - mysql -e 'CREATE DATABASE dbal_gateway;'
+  - ./vendor/bin/migrate.php app:install --path migration --force --dsn mysql://root:@127.0.0.1/dbal_gateway?migration_table=migrations_data
+  - ./vendor/bin/migrate.php app:build --path migration --force --dsn mysql://root:@127.0.0.1/dbal_gateway?migration_table=migrations_data
+  
+  

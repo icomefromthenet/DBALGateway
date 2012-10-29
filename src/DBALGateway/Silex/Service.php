@@ -9,16 +9,26 @@ class Service implements ServiceProviderInterface
     
     public function register(Application $app)
     {
-        $app['hello'] = $app->protect(function ($name) use ($app) {
-            $default = $app['hello.default_name'] ? $app['hello.default_name'] : '';
-            $name = $name ?: $default;
-
-            return 'Hello '.$app->escape($name);
+        
+        # register the streamed query logger
+        
+        $app['dbal_gateway.logger'] = $app->share(function ($name) use ($app) {
+            $monolog = $app['monolog'];
+            $event   = $app['dispatcher'];
+            
+            $query = new \DBALGateway\Feature\StreamQueryLogger($monolog);
+            $event->addSubscriber($query);
+            
+            return $query;
         });
+        
     }
 
     public function boot(Application $app)
     {
+        # boot the stream query logger
+        $app['dbal_gateway.logger'];
+    
     
     }
     
