@@ -1,7 +1,6 @@
 <?php
 namespace DBALGateway\Table;
 
-
 /**
   *  Events Definition for Table
   *

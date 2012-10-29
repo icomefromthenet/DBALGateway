@@ -1,8 +1,8 @@
 <?php
 namespace DBALGateway\Container;
 
-use DBALGateway\TableInterface;
-use Doctrine\DBAL\Query\QueryBuilder;
+use DBALGateway\Table\TableInterface;
+use DBALGateway\Query\AbstractQuery;
 
 class AbstractContainer
 {
@@ -16,10 +16,6 @@ class AbstractContainer
       */
     protected $query;
     
-    /**
-      *  @array the columns 
-      */
-    protected $data;
     
     /**
       *  Class Constructor
@@ -27,61 +23,13 @@ class AbstractContainer
       *  @param TableInterface $table
       *  @param QueryBuilder $query
       */
-    public function __construct(TableInterface $gateway,QueryBuilder $query)
+    public function __construct(TableInterface $gateway, AbstractQuery $query = null)
     {
         $this->gateway = $gateway;
         $this->query   = $query;
-        $this->data    = array();
     }
     
-    /**
-      *  Adds a column to the internal collection
-      *
-      *  @access public
-      *  @return AbstractContainer
-      *  @param string $column name of the column
-      *  @param mixed $value the value to save
-      */
-    public function addColumn($column,$value)
-    {
-        $this->data[$column] = $value;
-        
-        return $this;
-    }
-    
-    /**
-      *  Return the assigned data
-      *
-      *  @access public
-      *  @return mixed $data
-      */
-    public function getColumns()
-    {
-        return $this->data;
-    }
-    
-    
-    /**
-      *  Return the query builder
-      *
-      *  @access public
-      *  @return QueryBuilder
-      */
-    public function where()
-    {
-        return $this->query;    
-    }
-    
-    /**
-      *  Execute the query
-      *
-      *  @access public
-      *  @return mixed
-      */
-    public function end()
-    {
-        return $this->gateway;    
-    }
+   
     
     /**
       *  Starts the internal Query 
@@ -89,6 +37,17 @@ class AbstractContainer
     public function start()
     {
         return $this;
+    }
+    
+    /**
+      *  Return the interal QueryBuilder
+      *
+      *  @access public
+      *  @return DBALGateway\AbstractQuery\QueryBuilder
+      */
+    public function getQuery()
+    {
+        return $this->query;
     }
     
 }

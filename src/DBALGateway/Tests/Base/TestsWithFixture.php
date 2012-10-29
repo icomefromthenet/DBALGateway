@@ -5,6 +5,7 @@ use PDO;
 use PHPUnit_Extensions_Database_Operation_Composite;
 use PHPUnit_Extensions_Database_TestCase;
 use DBALGateway\Tests\Base\DBOperationSetEnv;
+use DBALGateway\Metadata\Table;
 
 class TestsWithFixture extends PHPUnit_Extensions_Database_TestCase
 {
@@ -17,6 +18,12 @@ class TestsWithFixture extends PHPUnit_Extensions_Database_TestCase
       */ 
     static private $pdo = null;
 
+    /**
+      *  @var  \Doctrine\DBAL\Connection
+      *  @access private
+      */
+    static private $doctrine_connection;
+    
     /**
       *  @var PHPUnit_Extensions_Database_DB_IDatabaseConnection only instantiate once per test
       *  @access private
@@ -52,6 +59,87 @@ class TestsWithFixture extends PHPUnit_Extensions_Database_TestCase
         return  $this->createXMLDataSet(__DIR__ . DIRECTORY_SEPARATOR .'fixture.xml');
     }
     
+    
+    /**
+    * Gets a db connection to the test database
+    *
+    * @access public
+    * @return \Doctrine\DBAL\Connection
+    */
+    public function getDoctrineConnection()
+    {
+        if(self::$doctrine_connection === null) {
+        
+            $config = new \Doctrine\DBAL\Configuration();
+            
+            $connectionParams = array(
+                'dbname' => $GLOBALS['DB_DBNAME'],
+                'user' => $GLOBALS['DB_USER'],
+                'password' => $GLOBALS['DB_PASSWD'],
+                'host' => 'localhost',
+                'driver' => 'pdo_mysql',
+            );
+        
+           self::$doctrine_connection = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
+        }
+        
+        return self::$doctrine_connection;
+        
+    }
+    
+    
+    public function getTableMetaData()
+    {
+        $table = new Table('users');
+        
+        $table->addColumn('id',"integer", array("unsigned" => true));
+        $table->addColumn('username', "string", array("length" => 32));
+        $table->addColumn('first_name', "string", array("length" => 45));
+        $table->addColumn('last_name',"string", array("length" => 45));
+        $table->addColumn('dte_created','datetime');
+        $table->addColumn('dte_updated','datetime');
+        $table->setPrimaryKey(array("id"));
+        
+        return $table;
+    }
+    
+    
+    protected $app;
+
+    /**
+    * PHPUnit setUp for setting up the application.
+    *
+    * Note: Child classes that define a setUp method must call
+    * parent::setUp().
+    */
+    public function setUp()
+    {
+        $this->app = $this->createApplication();
+        
+        parent::setUp();
+    }
+
+    /**
+    * Creates the application.
+    *
+    * @return HttpKernel
+    */
+    public function createApplication()
+    {
+        return null;
+    }
+
+    /**
+    * Creates a Client.
+    *
+    * @param array $server An array of server parameters
+    *
+    * @return Client A Client instance
+    */
+    public function createClient(array $server = array())
+    {
+        return new Client($this->app, $server);
+    }
     
 }
 /* End of File */

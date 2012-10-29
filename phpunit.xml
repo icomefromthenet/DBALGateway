@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit colors="true" stopOnFailure="false" bootstrap="vendor/autoload.php">
+<phpunit
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         syntaxCheck="false"
+         bootstrap="vendor/autoload.php"
+>
     <php>
         <var name="DB_DSN" value="mysql:dbname=dbal_gateway;host=localhost" />
         <var name="DB_USER" value="root" />
@@ -7,11 +17,9 @@
         <var name="DB_DBNAME" value="dbal_gateway" />
     </php>
     <testsuites>
-        <testsuite>
-            <directory>src/DBALGateway/Tests/*</directory>
-            <exclude>
-                <directory>src/DBALGateway/Tests/Base</directory>
-            </exclude>
+        <testsuite name="default">
+            <directory suffix="Test.php">src/DBALGateway/Tests/</directory>
+            <exclude>src/DBALGateway/Tests/Base</exclude>
         </testsuite>
   </testsuites>  
     

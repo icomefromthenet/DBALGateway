@@ -3,12 +3,13 @@
  
  <writer platform="mysql" format="phpunit" />
  
- 
  <table name="users" generate="100">
   
+  <!--
   <column name="id" type="integer">
-   <datatype name="autoincrement" />
-  </column>
+   <datatype name="autoincrement" start="0" />
+  </column> 
+  -->
   <column name="username" type="string">
    <datatype name="regex">
     <option name="format" value="\w{10,32}" />

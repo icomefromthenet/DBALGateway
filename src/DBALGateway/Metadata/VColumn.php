@@ -1,6 +1,8 @@
 <?php
 namespace DBALGateway\Metadata;
 
+use Doctrine\DBAL\Schema\Column;
+
 /**
   *  Object to represent a Virtual Column
   *
@@ -9,8 +11,6 @@ namespace DBALGateway\Metadata;
   */
 class VColumn extends Column
 {
-    
-    
     
 }
 /* End of File */

@@ -13,13 +13,14 @@ class init_schema implements EntityInterface
     {
         # create demo table
         $myTable = $builder->createTable("users");
-        $myTable->addColumn("id", "integer", array("unsigned" => true));
+        $myTable->addColumn("id", "integer", array("unsigned" => true,'autoincrment'=> true));
         $myTable->addColumn("username", "string", array("length" => 32));
         $myTable->addColumn("first_name", "string", array("length" => 45));
         $myTable->addColumn("last_name", "string", array("length" => 45));
         $myTable->addColumn("dte_created", "datetime");
         $myTable->addColumn("dte_updated", "datetime");
         $myTable->setPrimaryKey(array("id"));
+        $myTable->getColumn('id')->setAutoincrement(true);
         
         return $builder;
         
@@ -36,7 +37,6 @@ class init_schema implements EntityInterface
         foreach($build as $query) {
             $db->exec($query);    
         }
-        
     }
 
     public function down(Connection $db, Schema $sc)

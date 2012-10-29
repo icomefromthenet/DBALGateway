@@ -3,8 +3,11 @@ namespace DBALGateway\Table;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Connection;
-use DBALGateway\Metadata\Table as TableMeta;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use DBALGateway\Metadata\Table;
+use DBALGateway\Builder\BuilderInterface;
+
 
 /**
   *  Interface for table gateways
@@ -14,22 +17,58 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
   */
 interface TableInterface
 {
-    
+    /**
+      *  Initilize the table gateway
+      *
+      *  @return TableInterface
+      *  @access public
+      */
     public function initilize();
     
-    
+    /**
+      *  Execute a select query, return many rows
+      *  Requires a query be setup via the factory
+      *
+      *  
+      *  @return mixed
+      *  @access public
+      */
     public function find();
     
-    
+     /**
+      *  Execute a select query, return single row
+      *  Requires a query be setup via the factory
+      *  
+      *  @return mixed
+      *  @access public
+      */
     public function findOne();
     
-    
+    /**
+      *  Execute an insert query, return single row
+      *  Requires a query be setup via the factory
+      *  
+      *  @return mixed
+      *  @access public
+      */
     public function insert();
     
-    
+    /**
+      *  Execute a delete query, return single row
+      *  Requires a query be setup via the factory
+      *  
+      *  @return mixed
+      *  @access public
+      */
     public function delete();
     
-    
+    /**
+      *  Execute a update query, return single row
+      *  Requires a query be setup via the factory
+      *  
+      *  @return mixed
+      *  @access public
+      */
     public function update();
     
     /**
@@ -67,26 +106,73 @@ interface TableInterface
     public function setAdapater(Connection $conn);
     
     /**
-      *   
+      *   Sets the table metadata
+      *
+      *   @access public
+      *   @return TableInterface
+      *   @param DBALGateway\Metadata\Table metadata
       */    
-    public function setMetadata(TableMeta $meta);
+    public function setMetaData(Table $metadata);
     
     /**
-      *   
+      *   Fetches the table metadata
+      *
+      *   @access public
+      *   @return DBALGateway\Metadata\Table
       */
-    public function getMetadata();
+    public function getMetaData();
     
     /**
-      *   
+      *   Sets the event dispatcher
+      *
+      *   @access public
+      *   @return TableInterface
+      *   @param EventDispatcher $dispatcher
       */
-    public function setEventDispatcher(EventDispatcher $dispatcher);
+    public function setEventDispatcher(EventDispatcherInterface $dispatcher);
     
     
     /**
-      *   
+      *   Return the event dispatcher
+      *
+      *   @access public
+      *   @return EventDispatcher
       */
     public function getEventDispatcher();
     
+    /**
+      *   Sets the result object that cloned on each select query
+      *
+      *   @access public
+      *   @param Collection $col
+      *   @return TableInterface
+      */
+    public function setResultSet(Collection $col);
+    
+    /**
+      *  Return the prototype result collection
+      *
+      *  @access public
+      *  @return Collection
+      */
+    public function getResultSet();
+    
+    
+    /**
+      *   Return the entity builder
+      *
+      *   @access public
+      *   @return BuilderInterface $builder
+      */
+    public function getEntityBuilder();
+    
+    /**
+      *  Sets the entity builder
+      *
+      *  @access public
+      *  @param BuilderInterface $builder
+      */
+    public function setEntityBuilder(BuilderInterface $builder);
     
     
     /**
@@ -96,6 +182,25 @@ interface TableInterface
       *  @return QueryBuilder
       */
     public function newQueryBuilder();
+    
+    
+    /**
+      *  Will convert db values to php types
+      *  Uses doctrine column types
+      *
+      *  @access public
+      *  @return mixed
+      *  @param array $result
+      */
+    public function convertToPhp(array &$result);
+    
+    /**
+      *  Fetch the last autoincrement id inserted
+      *
+      *  @access public
+      *  @return integer | null
+      */
+    public function lastInsertId();
     
 }
 /* End of File */

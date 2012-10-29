@@ -14,14 +14,18 @@
     ],
 
     "require-dev" : {
-        "icomefromthenet/faker" : "1.0.3.4",
-        "icomefromthenet/migration" : "dev-master"
+        "icomefromthenet/faker"     : "1.0.3.4",
+        "icomefromthenet/migration" : "dev-master",
+        "silex/silex"               : "1.0.x-dev"
     },
+    
     "require" : {
         "symfony/event-dispatcher" : "2.1.*",
-        "doctrine/dbal" : "2.3.*" 
+        "doctrine/dbal"            : "2.3.*",
+        "monolog/monolog"          : "1.2.*"
     },
-     "autoload": {
+    
+    "autoload": {
         "psr-0": {
             "DBALGateway": "src/"
         }
