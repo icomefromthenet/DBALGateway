@@ -1,19 +1,19 @@
 # DBALGateway - Table Gateway for Doctrine DBAL.
 
-[Doctrine DBAL](http://www.doctrine-project.org/projects/dbal.html) is a fantastic extension to PDO but as with PDO a little more abstraction goes a long way. This component implements [table gateway](http://martinfowler.com/eaaCatalog/tableDataGateway.html) on top of Doctrine DBAL. This component is heavily inspired by zf2 table gateway and can be applied in the same situations where there is a 1 to 1 mapping of your database tables to entities.
+[Doctrine DBAL](http://www.doctrine-project.org/projects/dbal.html) is a fantastic extension to PDO but as with a little more abstraction becomes easer to use. This component implements [Table Gateway](http://martinfowler.com/eaaCatalog/tableDataGateway.html) on top of Doctrine DBAL. This component is heavily inspired by zf2 Table Gateway and can be applied where there is a 1 to 1 mapping of your database to entities.
 
 ## What are the benefits?
-1. Using metadata the gateway will convert values into there database types and convert database representations back into php types, for example DateTime objects are converted to stamps and stamps are converted back to DateTime. This functionality is provided by DBAL but must be called specifily by the developer.
+1. Using metadata the gateway will convert values, for example DateTime is converted to a stamps and the stamp is converted back to DateTime. 
 
-2. Events system, e.g pre_select , post_delete pre_insert... based around the symfony2 event dispatcher.
+2. Events system, e.g pre_select , post_delete , pre_insert... based around the symfony2 event dispatcher.
 
-3. Monolog query logger, you would normally need to write this yourself.
+3. Query Logger using Monolog, you would normally write this yourself.
 
-4. Supply a builder and map records to entities.
+4. Builder can map records to entities, you could build an active record on top of this gateway.
 
-5. Supply a collection based on a doctrine collection and it will load them into it.
+5. Supply a collection class and it will load them into it.
 
-6. Fluid interface for running insert, updates and deletes.
+6. Fluid interface for running selects, inserts, updates and deletes.
 
 ## Whats are the cons?
 1. Loose auto-completion in your IDE, for subclasses, only get it for the bases classes.
@@ -44,12 +44,12 @@ There are 3 components to every table.
 
 There are 2 optional components to every table
 
-4. Custom ResultSet implementation of ``Doctrine\Common\Collections\Collection``.
-5. Entity Builder implementation of ``DBALGateway\Builder\BuilderInterface``.
+4. Custom result-set implementation of ``Doctrine\Common\Collections\Collection``.
+5. Entity builder implementation of ``DBALGateway\Builder\BuilderInterface``.
 
 ### 1. The Metadata
 
-Assume have table structure.
+Assume have the following databse table.
 
 ```sql
 delimiter $$
@@ -98,7 +98,7 @@ call_user_func(function(){
 
 ```
 
-The datatypes (second argument in addColumn) are not mysql types but doctrine types, the mapping can be found under ``Doctrine\DBAL\Platforms\{MYPLATFORM}``.
+The datatypes (second argument in addColumn) are **not mysql types** but **doctrine types**, the mapping can be found under ``Doctrine\DBAL\Platforms\{MYPLATFORM}``.
 
 ### 2. The Table Gateway.
 
@@ -175,11 +175,11 @@ class MockUserQuery extends AbstractQuery
 
 ```
 
-Each custom filter should do the following.
+**Each custom filter should do the following.**
 
-1. Set a unique name parameter.
-2. Set the parameter values with function argument and fetch its doctrine type from meta-data in the gateway.
-3. Return $this ie the current query class.
+1. Set a unique named parameter.
+2. Set the parameter value and fetch the doctrine type from the meta-data in the table gateway.
+3. Return $this.
 
 ### 4. The Collections class.
 
