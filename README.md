@@ -44,8 +44,8 @@ There are 3 components to every table.
 
 There are 2 optional components to every table
 
-4. Custom ResultSet.
-5. Entity Builder.
+4. Custom ResultSet implementation of ``Doctrine\Common\Collections\Collection``.
+5. Entity Builder implementation of ``DBALGateway\Builder\BuilderInterface``.
 
 ### 1. The Metadata
 
@@ -102,7 +102,7 @@ The datatypes (second argument in addColumn) are not mysql types but doctrine ty
 
 ### 2. The Table Gateway.
 
-You will need to declare a class that is a subclass of `DBALGateway\Metadata\Table`` and override the method ``newQueryObject()``.
+You will need to declare a subclass of ``DBALGateway\Metadata\Table`` and override the method ``newQueryObject()``.
 
 ```php
 <?php
@@ -131,7 +131,7 @@ You may also include other custom code on this class. But note all methods a mar
 
 ### 3. The QueryClass
 
-You will need to subclass the ``DBALGateway\Query\AbstractQuery`` which is itself a subclass of ``Doctrine\DBAL\Query\QueryBuilder``.
+You will need to subclass ``DBALGateway\Query\AbstractQuery`` which is itself a subclass of ``Doctrine\DBAL\Query\QueryBuilder``.
 
 ```php
 <?php
@@ -183,7 +183,7 @@ Each custom filter should do the following.
 
 ### 4. The Collections class.
 
-When using ``find()`` method on the gateway will be stored by default all return values in a collection class offerd by doctrine `Doctrine\Common\Collections\ArrayCollection`. If the gateway's constructor is passed an instance of a collection that inherits the interface from `Doctrine\Common\Collections\Collection` it will clone a copy and use that instead.
+When using ``find()`` on the gateway results will be stored in a collection class offerd by doctrine `Doctrine\Common\Collections\ArrayCollection`. If the gateway's constructor is passed an instance an alternative that inherits the interface from `Doctrine\Common\Collections\Collection` it will clone a copy and use that.
 
 ```php
 
@@ -202,14 +202,13 @@ $gateway = new MockUserGateway('user',$conn,$event,$meta,$collection,null);
 
 ```
 
-This gateway will clone ``$collection`` on each call to ``find``. Note ``findOne()`` does not return collection just entity / array.
+This gateway will clone ``$collection`` on each call to ``find``. **Note:** ``findOne()`` does not return collection just entity/array.
 
 
 
 ### 5. The Entity Builder
 
-When using ``find()`` or ``findOne()`` on the gateway and a class the implements the builder interface ``DBALGateway\Builder\BuilderInterface`` each result found in the set
-will be passed to the builder for conversion into an entity.
+When using ``find()`` or ``findOne()`` each result found in the set will be passed to the builder for conversion into an entity. A builder must implement the interface found at ``DBALGateway\Builder\BuilderInterface``.
 
 ```
 use DBALGateway\Builder\BuilderInterface;
@@ -254,11 +253,12 @@ $gateway = new MockUserGateway('users',$conn,$event,$meta,null,$builder);
 
 ```
 
-If a collection class is used this new entity will be given to the collection.
+**Note:** If a collection class is used this new entity will be given to the collection.
 
 ### Running Queries
 
-#### Run an INSERT query
+#### Run an INSERT Query.
+
 ```php
 $gateway = new MockUserGateway('users',$conn,$event,$meta);
 
@@ -281,7 +281,7 @@ if($success) {
 ```
 
 
-#### Run an UPDATE query
+#### Run an UPDATE Query.
 
 ```php
 $gateway = new MockUserGateway('users',$conn,$event,$meta);
@@ -306,7 +306,7 @@ if($success) {
 
 ```
 
-### Run a DELETE Query
+#### Run a DELETE Query.
 
 ```php
 $gateway = new MockUserGateway('users',$conn,$event,$meta);
@@ -325,7 +325,7 @@ if($success) {
 
 ```
 
-### Run a select query
+#### Run a SELECT Query.
 
 There are two methods ``findOne()`` and ``find()``.
 
