@@ -371,7 +371,7 @@ A Gateway has the following dependecies.
 1. The table name in the schema.
 2. The `Doctrine\DBAL\Connection` $connection.
 3. An instance of `Symfony\Component\EventDispatcher\EventDispatcherInterface`.
-4. The meta data for table instance of 'DBALGateway\Metadata\Table'.
+4. The meta data for table instance of `DBALGateway\Metadata\Table`.
 5. (optional) a result-set to clone an instance class that implements `Doctrine\Common\Collections\Collection`
 6. (optional) a enity builder an instance class that implements `DBALGateway\Builder\BuilderInterface`
 
@@ -475,5 +475,5 @@ The Gateway emits a number of events.
  </tr>  
 </table>
 
-For an example see the [BufferedQueryLogger](src/DBALGateway/Feature/BufferedQueryLogger.php).
+For an example see the [BufferedQueryLogger](http://github.com/icomefromthenet/DBALGateway/blob/master/src/DBALGateway/Feature/BufferedQueryLogger.php).
 
