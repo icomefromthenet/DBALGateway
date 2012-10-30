@@ -255,9 +255,9 @@ $gateway = new MockUserGateway('users',$conn,$event,$meta,null,$builder);
 
 **Note:** If a collection class is used this new entity will be given to the collection.
 
-### Running Queries
+## Running Queries
 
-#### Run an INSERT Query.
+### Run an INSERT Query.
 
 ```php
 $gateway = new MockUserGateway('users',$conn,$event,$meta);
@@ -281,7 +281,7 @@ if($success) {
 ```
 
 
-#### Run an UPDATE Query.
+### Run an UPDATE Query.
 
 ```php
 $gateway = new MockUserGateway('users',$conn,$event,$meta);
@@ -306,7 +306,7 @@ if($success) {
 
 ```
 
-#### Run a DELETE Query.
+### Run a DELETE Query.
 
 ```php
 $gateway = new MockUserGateway('users',$conn,$event,$meta);
@@ -325,7 +325,7 @@ if($success) {
 
 ```
 
-#### Run a SELECT Query.
+### Run a SELECT Query.
 
 There are two methods ``findOne()`` and ``find()``.
 
@@ -363,3 +363,117 @@ if($result !== null) {
 }
 
 ```
+
+## Instance a Gateway?
+
+A Gateway has the following dependecies.
+
+1. The table name in the schema.
+2. The `Doctrine\DBAL\Connection` $connection.
+3. An instance of `Symfony\Component\EventDispatcher\EventDispatcherInterface`.
+4. The meta data for table instance of 'DBALGateway\Metadata\Table'.
+5. (optional) a result-set to clone an instance class that implements `Doctrine\Common\Collections\Collection`
+6. (optional) a enity builder an instance class that implements `DBALGateway\Builder\BuilderInterface`
+
+``` php
+ new MockUserGateway('users',$conn,$event,$meta,$result_set,$builder);
+
+```
+
+## Features and Events.
+
+The Gateway emits a number of events.
+
+<table>
+ <tr>
+  <th>
+    Event Name
+  </th>
+  <th>
+    Event Description
+  </th>
+ </tr>
+ <tr>
+  <td>
+    pre_initilize   
+  </td>
+  <td>
+    Occurs during object construction.
+  </td>
+ </tr>
+  <tr>
+  <td>
+    post_initilize   
+  </td>
+  <td>
+    Occurs after object construction.
+  </td>
+ </tr>
+ <tr>
+  <td>
+    pre_select
+  </td>
+  <td>
+    Occurs before a select query is run.
+  </td>
+ </tr>
+ <tr>
+  <td>
+    post_select
+  </td>
+  <td>
+    Occurs after a select query is run.
+  </td>
+ </tr>
+ <tr>
+  <td>
+    pre_delete
+  </td>
+  <td>
+    Occurs before delete query is run.
+  </td>
+ </tr>
+ <tr>
+  <td>
+    post_delete
+  </td>
+  <td>
+    Occurs after delete query is run.
+  </td>
+ </tr>
+ <tr>
+  <td>
+    pre_insert
+  </td>
+  <td>
+    Occurs before an insert is run.
+  </td>
+ </tr>
+  <tr>
+  <td>
+    post_insert
+  </td>
+  <td>
+    Occurs after an insert is run.
+  </td>
+ </tr>
+  <tr>
+  <td>
+    pre_update
+  </td>
+  <td>
+    Occurs before an update is run.
+  </td>
+ </tr>
+  <tr>
+  <td>
+    post_update
+  </td>
+  <td>
+    Occurs after an update is run.
+  </td>
+ </tr>  
+</table>
+
+For an example see the [BufferedQueryLogger](src/DBALGateway/Feature/BufferedQueryLogger.php).
+
