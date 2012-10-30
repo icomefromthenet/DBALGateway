@@ -210,7 +210,7 @@ This gateway will clone ``$collection`` on each call to ``find``. **Note:** ``fi
 
 When using ``find()`` or ``findOne()`` each result found in the set will be passed to the builder for conversion into an entity. A builder must implement the interface found at ``DBALGateway\Builder\BuilderInterface``.
 
-```
+```php
 use DBALGateway\Builder\BuilderInterface;
 
 class EntityBuilder implements BuilderInterface
