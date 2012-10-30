@@ -194,7 +194,8 @@ class AbstractTable implements ContainerFactoryInterface, TableInterface
         $this->event_dispatcher->dispatch(TableEvents::POST_SELECT,new TableEvent($this,$result));
         
         $this->clear();
-         return $result;   
+        
+        return $result;   
         
     }
     
