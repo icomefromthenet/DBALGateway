@@ -183,7 +183,7 @@ class AbstractTable implements ContainerFactoryInterface, TableInterface
                 $this->convertToPhp($result);
                 
                 if($this->entity_builder instanceof BuilderInterface) {
-                    $data = $this->entity_builder->build($result);
+                    $result = $this->entity_builder->build($result);
                 }     
             }
             
