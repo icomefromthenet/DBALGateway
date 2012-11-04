@@ -114,8 +114,6 @@ class TestsWithFixture extends PHPUnit_Extensions_Database_TestCase
     */
     public function setUp()
     {
-        $this->app = $this->createApplication();
-        
         parent::setUp();
     }
 

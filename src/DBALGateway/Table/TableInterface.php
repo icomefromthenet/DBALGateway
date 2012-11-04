@@ -202,5 +202,13 @@ interface TableInterface
       */
     public function lastInsertId();
     
+    /**
+      *  Return the rows affected by last query
+      *
+      *  @access public
+      *  @return integer the rows affected
+      */
+    public function rowsAffected();
+    
 }
 /* End of File */

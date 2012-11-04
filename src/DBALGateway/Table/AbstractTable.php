@@ -25,9 +25,14 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class AbstractTable implements ContainerFactoryInterface, TableInterface
 {
     /**
-      *  @var integer 
+      *  @var integer id of the last insert operation
       */
     protected $last_insert_id;
+    
+    /**
+      *  @var integer the rows affected by last query 
+      */
+    protected $affected;
     
     /**
       *  @var string the table name 
@@ -70,8 +75,9 @@ class AbstractTable implements ContainerFactoryInterface, TableInterface
     public function __construct($table_name, Connection $adapter, EventDispatcherInterface $event, Table $meta = null, Collection $result_set = null, BuilderInterface $builder = null)
     {
         # Need a table name for the metadata feature.
-        $this->table_name          = $table_name;
-        $this->last_insert_id      = null;
+        $this->table_name      = $table_name;
+        $this->last_insert_id  = null;
+        $this->affected        = 0;
         
         $this->setAdapater($adapter);
         $this->setEventDispatcher($event);
@@ -209,12 +215,13 @@ class AbstractTable implements ContainerFactoryInterface, TableInterface
     public function insert()
     {
         $result = false;
+        $this->affected = 0;
         
         $this->event_dispatcher->dispatch(TableEvents::PRE_INSERT,new TableEvent($this));
         
         try {
             
-            if($this->adapter->insert($this->meta->getName(), $this->head->getColumns(), $this->head->getTypeInfo()) > 0) {
+            if(($this->affected = $this->adapter->insert($this->meta->getName(), $this->head->getColumns(), $this->head->getTypeInfo())) > 0) {
                 $result = true;
                 $this->last_insert_id = $this->adapter->lastInsertId();     
             }
@@ -240,12 +247,13 @@ class AbstractTable implements ContainerFactoryInterface, TableInterface
     public function delete()
     {
         $result = false;
+        $this->affected = 0;
      
         $this->event_dispatcher->dispatch(TableEvents::PRE_DELETE,new TableEvent($this));
         
         try {
             
-            if($this->head->getQuery()->execute() > 0) {
+            if(($this->affected = $this->head->getQuery()->execute()) > 0) {
                 $result = true;
             }
             
@@ -269,12 +277,13 @@ class AbstractTable implements ContainerFactoryInterface, TableInterface
     public function update()
     {
         $result = null;
+        $this->affected = 0;
         
         $this->event_dispatcher->dispatch(TableEvents::PRE_UPDATE,new TableEvent($this));
         
         try {
             
-            if($this->head->getQuery()->execute() > 0) {
+            if(($this->affected = $this->head->getQuery()->execute()) > 0) {
                 $result = true;
             }
             
@@ -479,6 +488,18 @@ class AbstractTable implements ContainerFactoryInterface, TableInterface
     {
         return $this->last_insert_id;
     }
+    
+    /**
+      *  Return the rows affected by last query
+      *
+      *  @access public
+      *  @return integer the rows affected
+      */
+    public function rowsAffected()
+    {
+        return $this->affected;
+    }
+    
     
     //------------------------------------------------------------------
     # Container Factory Interface

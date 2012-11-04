@@ -42,11 +42,6 @@ class StreamQueryLogger implements EventSubscriberInterface , SQLLogger
       */
     protected $last_query;
     
-    /**
-      *  @var boolean global flag for int routine 
-      */
-    static $registered = false;
-            
             
     static public function getSubscribedEvents()
     {
@@ -63,8 +58,10 @@ class StreamQueryLogger implements EventSubscriberInterface , SQLLogger
     
 
     /**
-      *  Register the logger once
-      *  determined using a static bool
+      *  Register the logger for this table, only use this
+      *  method if you looking to debug a single table during dev
+      *  this will overrite other loggers. Use a global setup for query
+      *  logging e.g DBALGateway\Silex\Service.
       *
       *  @access public
       *  @return void
@@ -72,10 +69,7 @@ class StreamQueryLogger implements EventSubscriberInterface , SQLLogger
       */
     public function onPostInit(TableEvent $event)
     {
-        if(self::$registered === false) {
-            self::$registered = true;
-            $event->getTable()->getAdapater()->getConfiguration()->setSQLLogger($this);    
-        }
+        $event->getTable()->getAdapater()->getConfiguration()->setSQLLogger($this);    
     }
     
     /**

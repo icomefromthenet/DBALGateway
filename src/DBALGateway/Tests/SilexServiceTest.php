@@ -12,6 +12,21 @@ use DateTime;
 
 class SilexServiceTest extends TestsWithFixture
 {
+    
+    /**
+    * PHPUnit setUp for setting up the application.
+    *
+    * Note: Child classes that define a setUp method must call
+    * parent::setUp().
+    */
+    public function setUp()
+    {
+        $this->app = $this->createApplication();
+        
+        parent::setUp();
+    }
+
+    
     public function createApplication()
     {
         $app = new Application();
@@ -36,14 +51,14 @@ class SilexServiceTest extends TestsWithFixture
 
     public function testStreamWritesToLog()
     {
+        
         $this->app->boot();
         
         # assert logger was loaded
         $this->assertInstanceOf('DBALGateway\Feature\StreamQueryLogger',$this->app['dbal_gateway.logger']);
         
-        $logger = $this->app['dbal_gateway.logger'];
-        
         $table = new  MockUserTableGateway('users',$this->app['db'],$this->app['dispatcher'],$this->getTableMetaData());      
+        $logger = $this->app['dbal_gateway.logger'];
         
         $username = 'myuser';
         $new_date = new DateTime();
@@ -63,9 +78,7 @@ class SilexServiceTest extends TestsWithFixture
         $this->assertTrue($success);
         
         $last_query = $logger->lastQuery();
-        $this->assertEquals($last_query['sql'],'INSERT INTO users (username, dte_created, first_name, last_name, dte_updated) VALUES (?, ?, ?, ?, ?)');
-        
-        
+        $this->assertEquals('INSERT INTO users (username, dte_created, first_name, last_name, dte_updated) VALUES (?, ?, ?, ?, ?)',$last_query['sql']);
     }
 }
 /* End of File */

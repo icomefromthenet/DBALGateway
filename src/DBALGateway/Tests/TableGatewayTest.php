@@ -26,6 +26,7 @@ class TableGatewayTest extends TestsWithFixture
         $this->assertEquals($meta,$mock_table->getMetaData());
         $this->assertEquals($mock_builder,$mock_table->getEntityBuilder());
         $this->assertEquals($result_set,$mock_table->getResultSet());
+        $this->assertEquals($mock_table->rowsAffected(),0);
         
     }
     
@@ -130,6 +131,7 @@ class TableGatewayTest extends TestsWithFixture
         
         $this->assertTrue($success);
         $this->assertEquals(101,$mock_table->lastInsertId());
+        $this->assertEquals($mock_table->rowsAffected(),1);
     }
     
     
@@ -155,6 +157,7 @@ class TableGatewayTest extends TestsWithFixture
         ->delete();
         
         $this->assertTrue($success);
+        $this->assertEquals($mock_table->rowsAffected(),1);
     }
     
 
@@ -190,6 +193,7 @@ class TableGatewayTest extends TestsWithFixture
         ->update();
         
         $this->assertTrue($success);
+        $this->assertEquals($mock_table->rowsAffected(),1);
         
     }
     

@@ -4,6 +4,7 @@ namespace DBALGateway\Query;
 use Doctrine\DBAL\Query\QueryBuilder;
 use DBALGateway\Table\TableInterface;
 use Doctrine\DBAL\Connection;
+use DBALGateway\Exception as QueryException;
 
 /**
   *  Base Class for all QueryObjects
@@ -67,6 +68,42 @@ class AbstractQuery extends QueryBuilder implements QueryInterface
         $this->table_gateway;
     }
 
+    
+    /**
+      *  Alias to the QueryBuilder::setMaxResults()
+      *
+      *  @access public
+      *  @return AbstractQuery
+      *  @param integer the limit
+      */
+    public function limit($limit)
+    {
+        if(is_integer($limit) === false || (int) $limit < 0) {
+            throw new QueryException('Query LIMIT must be and integer and greater than 0');
+        }
+     
+        $this->setMaxResults($limit);
+        
+        return $this;
+    }
+    
+    /**
+      *  Alias to the QueryBuilder::setFirstResult()
+      *
+      *  @access public
+      *  @return AbstractQuery
+      *  @param integer $offset defaults to 0
+      */
+    public function offset($offset = 0)
+    {
+        if(is_integer($offset) === false) {
+            throw new QueryException('Query OFFSET must be and integer');
+        }
+        
+        $this->setFirstResult($offset);
+        
+        return $this;
+    }
     
     
 }
