@@ -1,6 +1,6 @@
 # DBALGateway - Table Gateway for Doctrine DBAL.
 
-[Doctrine DBAL](http://www.doctrine-project.org/projects/dbal.html) is a fantastic extension to PDO but as with a little more abstraction becomes easer to use. This component implements [Table Gateway](http://martinfowler.com/eaaCatalog/tableDataGateway.html) on top of Doctrine DBAL. This component is heavily inspired by zf2 Table Gateway and can be applied where there is a 1 to 1 mapping of your database to entities.
+[Doctrine DBAL](http://www.doctrine-project.org/projects/dbal.html) is a fantastic extension to PDO but as with a little more abstraction it becomes easer to use. This component implements [Table Gateway](http://martinfowler.com/eaaCatalog/tableDataGateway.html) on top of Doctrine DBAL. This component is heavily inspired by zf2 Table Gateway and can be applied where there is a 1 to 1 mapping of your database to entities.
 
 ## What are the benefits?
 1. Using metadata the gateway will convert values, for example DateTime is converted to a stamps and the stamp is converted back to DateTime. 
