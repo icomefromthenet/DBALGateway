@@ -12,7 +12,7 @@ use DBALGateway\Exception as QueryException;
   *  @author Lewis Dyer <getintouch@icomefromthenet.com>
   *  @since 0.0.1
   */
-class AbstractQuery extends QueryBuilder implements QueryInterface
+abstract class AbstractQuery extends QueryBuilder implements QueryInterface
 {
     /**
       *  @var TableInterface

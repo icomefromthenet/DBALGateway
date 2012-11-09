@@ -22,7 +22,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
   *  @author Lewis Dyer <getintouch@icomefromthenet.com>
   *  @since 0.0.1
   */
-class AbstractTable implements ContainerFactoryInterface, TableInterface
+abstract class AbstractTable implements ContainerFactoryInterface, TableInterface
 {
     /**
       *  @var integer id of the last insert operation

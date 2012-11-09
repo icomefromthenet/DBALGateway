@@ -4,7 +4,7 @@ namespace DBALGateway\Container;
 use DBALGateway\Table\TableInterface;
 use DBALGateway\Query\AbstractQuery;
 
-class AbstractContainer
+abstract class AbstractContainer
 {
     /**
       *  @var TableInterface the table instance 
