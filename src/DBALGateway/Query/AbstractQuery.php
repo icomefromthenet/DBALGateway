@@ -122,6 +122,13 @@ abstract class AbstractQuery extends QueryBuilder implements QueryInterface
         switch ($this->getType()) {
             case self::DELETE:
             case self::UPDATE:
+                
+                # process orderby
+                $order = $this->getQueryPart('orderBy');
+                if(count($order) !== 0) {
+                    $sql .=' ORDER BY ' . implode(', ', $order);
+                }
+                
                 if($this->getMaxResults() !== null || $this->getFirstResult() !== null) {
                     $sql = $this->getConnection()->getDatabasePlatform()->modifyLimitQuery($sql, $this->getMaxResults(), $this->getFirstResult());
                 }

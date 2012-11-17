@@ -151,5 +151,29 @@ class AbstractQueryTest extends TestsWithFixture
     }
     
     
+    public function testUpdateOrderBy()
+    {
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
+        
+        $mock_query = $mock->newQueryBuilder(); 
+        
+        $mock_query->update('users', 'u')->set('u.password', md5('password'))->orderBy('u.ome');
+        
+        $this->assertRegExp('/UPDATE users u SET u.password = 5f4dcc3b5aa765d61d8327deb882cf99 ORDER BY u.ome ASC/',$mock_query->getSql());
+    }
+    
+     public function testDeleteOrderBy()
+    {
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
+        
+        $mock_query = $mock->newQueryBuilder(); 
+        
+        $mock_query->delete('users', 'u')->where('u.id = :user_id')->setParameter(':user_id', 1)->orderBy('u.ome');
+        
+        $this->assertRegExp('/DELETE FROM users u WHERE u.id = :user_id ORDER BY u.ome ASC/',$mock_query->getSql());
+    }
+    
 }
 /* End of Class */
