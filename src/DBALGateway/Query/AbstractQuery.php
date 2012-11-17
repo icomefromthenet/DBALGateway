@@ -105,6 +105,32 @@ abstract class AbstractQuery extends QueryBuilder implements QueryInterface
         return $this;
     }
     
+    /**
+     * Get the complete SQL string formed by the current specifications of this QueryBuilder.
+     * !!!Overidden here to add support for limits and offset to delete and update methods!!!
+     *
+     * @return string The sql query string.
+     */
+    public function getSQL()
+    {
+        # force use of the cache query, (don't change as parent sets STATE to clean)
+        if($this->getState() === self::STATE_CLEAN) {
+            return parent::getSQL();
+        }
+
+        $sql = parent::getSQL();
+        switch ($this->getType()) {
+            case self::DELETE:
+            case self::UPDATE:
+                if($this->getMaxResults() !== null || $this->getFirstResult() !== null) {
+                    $sql = $this->getConnection()->getDatabasePlatform()->modifyLimitQuery($sql, $this->getMaxResults(), $this->getFirstResult());
+                }
+            break;
+        }
+
+        return $sql;
+    }
+    
     
 }
 /* End of Class */

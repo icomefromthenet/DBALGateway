@@ -14,7 +14,7 @@
     ],
 
     "require-dev" : {
-        "icomefromthenet/faker"     : "1.0.3.4",
+        "icomefromthenet/faker"     : "1.0.3.*",
         "icomefromthenet/migration" : "dev-master",
         "silex/silex"               : "1.0.x-dev"
     },

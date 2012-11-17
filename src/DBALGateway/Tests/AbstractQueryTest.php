@@ -74,5 +74,82 @@ class AbstractQueryTest extends TestsWithFixture
         
     }
     
+    public function testDeleteQueryWithOffset()
+    {
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
+        
+        $mock_query = $mock->newQueryBuilder(); 
+        
+        $mock_query->delete('users', 'u')->where('u.id = :user_id')->setParameter(':user_id', 1)->offset(100);
+        
+        $this->assertRegExp('/DELETE FROM users u WHERE u.id = :user_id OFFSET 100/',$mock_query->getSql());
+    }
+    
+    
+    public function testDeleteQueryWithLimit()
+    {
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
+        
+        $mock_query = $mock->newQueryBuilder(); 
+        
+        $mock_query->delete('users', 'u')->where('u.id = :user_id')->setParameter(':user_id', 1)->limit(100);
+        
+        $this->assertRegExp('/DELETE FROM users u WHERE u.id = :user_id LIMIT 100/',$mock_query->getSql());
+    }
+    
+    
+    public function testDeleteQueryWithLimitOffset()
+    {
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
+        
+        $mock_query = $mock->newQueryBuilder(); 
+        
+        $mock_query->delete('users', 'u')->where('u.id = :user_id')->setParameter(':user_id', 1)->limit(100)->offset(6);
+        
+        $this->assertRegExp('/DELETE FROM users u WHERE u.id = :user_id LIMIT 100 OFFSET 6/',$mock_query->getSql());
+    }
+    
+     public function testUpdateQueryWithOffset()
+    {
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
+        
+        $mock_query = $mock->newQueryBuilder(); 
+        
+        $mock_query->update('users', 'u')->set('u.password', md5('password'))->offset(100);
+        
+        $this->assertRegExp('/UPDATE users u SET u.password = 5f4dcc3b5aa765d61d8327deb882cf99 OFFSET 100/',$mock_query->getSql());
+    }
+    
+    
+    public function testUpdateQueryWithLimit()
+    {
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
+        
+        $mock_query = $mock->newQueryBuilder(); 
+        
+       $mock_query->update('users', 'u')->set('u.password', md5('password'))->limit(100);
+        
+        $this->assertRegExp('/UPDATE users u SET u.password = 5f4dcc3b5aa765d61d8327deb882cf99 LIMIT 100/',$mock_query->getSql());
+    }
+    
+    
+    public function testUpdateQueryWithLimitOffset()
+    {
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
+        
+        $mock_query = $mock->newQueryBuilder(); 
+        
+       $mock_query->update('users', 'u')->set('u.password', md5('password'))->offset(100)->limit(6);
+        
+        $this->assertRegExp('/UPDATE users u SET u.password = 5f4dcc3b5aa765d61d8327deb882cf99 LIMIT 6 OFFSET 100/',$mock_query->getSql());
+    }
+    
+    
 }
 /* End of Class */
