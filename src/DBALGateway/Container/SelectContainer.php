@@ -31,7 +31,7 @@ class SelectContainer extends AbstractContainer
     {
         if($this->bound === false) {
             $this->query->select(array_keys($this->gateway->getMetaData()->getColumns()));
-            $this->query->from($this->gateway->getMetaData()->getName());
+            $this->query->from($this->gateway->getMetaData()->getName(),null);
             $this->bound = true;    
         }
         
