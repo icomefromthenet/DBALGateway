@@ -9,7 +9,7 @@ use Doctrine\DBAL\Logging\SQLLogger;
 
 /**
   *  In memory query logger , used if your looking to record the last run query
-  *  and don't want to log to external file. Unlink the doctrine counterpart this
+  *  and don't want to log to external file. Unlinke the doctrine counterpart this
   *  class has a buffer setting to save memory.
   *
   *  @author Lewis Dyer <getintouch@icomefromthenet.com>
