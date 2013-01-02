@@ -13,8 +13,9 @@
     <php>
         <var name="DB_DSN" value="mysql:dbname=dbal_gateway;host=localhost" />
         <var name="DB_USER" value="root" />
-        <var name="DB_PASSWD" value="vagrant" />
+        <var name="DB_PASSWD" value="" />
         <var name="DB_DBNAME" value="dbal_gateway" />
+        <server name="APP_ENVIRONMENT" value="travis" />
     </php>
     <testsuites>
         <testsuite name="default">
