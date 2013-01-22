@@ -20,7 +20,7 @@
     },
     
     "require" : {
-        "symfony/event-dispatcher" : "2.1.*",
+        "symfony/event-dispatcher" : "~2",
         "doctrine/dbal"            : "2.3.*",
         "monolog/monolog"          : "1.2.*"
     },
