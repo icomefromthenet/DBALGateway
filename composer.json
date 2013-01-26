@@ -21,7 +21,7 @@
     "require" : {
         "symfony/event-dispatcher" : ">=2.1",
         "doctrine/dbal"            : ">=2.3",
-        "monolog/monolog"          : ">=1.3.*"
+        "monolog/monolog"          : "1.3.*"
     },
     
     "autoload": {
