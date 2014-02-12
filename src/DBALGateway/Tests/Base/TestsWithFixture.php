@@ -73,11 +73,11 @@ class TestsWithFixture extends PHPUnit_Extensions_Database_TestCase
             $config = new \Doctrine\DBAL\Configuration();
             
             $connectionParams = array(
-                'dbname' => $GLOBALS['DB_DBNAME'],
-                'user' => $GLOBALS['DB_USER'],
+                'dbname'   => $GLOBALS['DB_DBNAME'],
+                'user'     => $GLOBALS['DB_USER'],
                 'password' => $GLOBALS['DB_PASSWD'],
-                'host' => 'localhost',
-                'driver' => 'pdo_mysql',
+                'host'     => $GLOBALS['DB_HOST'],
+                'driver'   => 'pdo_mysql',
             );
         
            self::$doctrine_connection = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
