@@ -4,10 +4,10 @@
 
 return array (
   'type' => 'pdo_mysql',
-  'schema' => 'dbal_gateway',
-  'user' => 'root',
+  'schema' => 'c9',
+  'user' => 'icomefromthenet',
   'password' => '',
-  'host' => 'localhost',
+  'host' => '127.5.67.129',
   'port' => 3306,
   'migration_table' => 'migrations_data',
   'socket' => false,

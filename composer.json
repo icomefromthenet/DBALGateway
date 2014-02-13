@@ -15,7 +15,9 @@
 
     "require-dev" : {
         "icomefromthenet/migration" : "dev-master",
-        "silex/silex"               : "dev-master"
+        "silex/silex"               : "dev-master",
+        "phpunit/phpunit"           : "3.7.*",
+        "phpunit/dbunit"            : ">=1.2"
     },
     
     "require" : {

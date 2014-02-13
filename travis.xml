@@ -15,6 +15,7 @@
         <var name="DB_USER" value="root" />
         <var name="DB_PASSWD" value="" />
         <var name="DB_DBNAME" value="dbal_gateway" />
+        <var name="DB_HOST" value="localhost" />
         <server name="APP_ENVIRONMENT" value="travis" />
     </php>
     <testsuites>

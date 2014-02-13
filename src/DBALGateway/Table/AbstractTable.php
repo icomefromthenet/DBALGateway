@@ -10,6 +10,7 @@ use DBALGateway\Container\SelectContainer;
 use DBALGateway\Container\UpdateContainer;
 use DBALGateway\Builder\BuilderInterface;
 use DBALGateway\Metadata\Table;
+use Doctrine\DBAL\Schema\Table as DTable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Connection;
@@ -72,7 +73,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
     /**
       *  Class Constructor 
       */
-    public function __construct($table_name, Connection $adapter, EventDispatcherInterface $event, Table $meta = null, Collection $result_set = null, BuilderInterface $builder = null)
+    public function __construct($table_name, Connection $adapter, EventDispatcherInterface $event, DTable $meta = null, Collection $result_set = null, BuilderInterface $builder = null)
     {
         # Need a table name for the metadata feature.
         $this->table_name      = $table_name;
@@ -119,11 +120,22 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
     public function initilize()
     {
         $this->event_dispatcher->dispatch(TableEvents::PRE_INITIALIZE,new TableEvent($this));
-        
+        $this->initilizeAction();
         $this->event_dispatcher->dispatch(TableEvents::POST_INITIALIZE,new TableEvent($this));
         
         $this->clear();
         return $this;
+    }
+    
+    /**
+    * This is an action that can be 
+    * overidden by the child classes
+    *
+    *  @return void
+    */
+    protected function initilizeAction()
+    {
+        return null;
     }
     
     /**
@@ -465,7 +477,14 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
     public function convertToPhp(array &$result)
     {
         $platform = $this->adapter->getDatabasePlatform();
-        $columns = $this->meta->getCombinedColumns();
+        
+        if($this->meta instanceof Table ) {
+            $columns = $this->meta->getCombinedColumns();
+        }
+        else {
+            $columns = $this->meta->getColumns();
+        }
+        
         
         foreach($columns as $column) {
             $name = $column->getName();

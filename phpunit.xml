@@ -11,10 +11,11 @@
          bootstrap="vendor/autoload.php"
 >
     <php>
-        <var name="DB_DSN" value="mysql:dbname=dbal_gateway;host=localhost" />
-        <var name="DB_USER" value="root" />
-        <var name="DB_PASSWD" value="vagrant" />
-        <var name="DB_DBNAME" value="dbal_gateway" />
+        <var name="DB_DSN" value="mysql:dbname=c9;host=127.5.67.129" />
+        <var name="DB_USER" value="icomefromthenet" />
+        <var name="DB_PASSWD" value="" />
+        <var name="DB_HOST" value="127.5.67.129" />
+        <var name="DB_DBNAME" value="c9" />
     </php>
     <testsuites>
         <testsuite name="default">
