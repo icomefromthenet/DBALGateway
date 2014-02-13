@@ -3,9 +3,9 @@ namespace DBALGateway\Table;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Schema\Table;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use DBALGateway\Metadata\Table;
 use DBALGateway\Builder\BuilderInterface;
 
 
@@ -110,7 +110,7 @@ interface TableInterface
       *
       *   @access public
       *   @return TableInterface
-      *   @param DBALGateway\Metadata\Table metadata
+      *   @param Doctrine\DBAL\Schema\Table metadata
       */    
     public function setMetaData(Table $metadata);
     

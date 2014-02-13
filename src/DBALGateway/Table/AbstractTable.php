@@ -363,9 +363,9 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
       *
       *   @access public
       *   @return TableInterface
-      *   @param DBALGateway\Metadata\Table metadata
+      *   @param Doctrine\DBAL\Schema\Table $metadata
       */    
-    public function setMetaData(Table $metadata)
+    public function setMetaData(DTable $metadata)
     {
         $this->meta = $metadata;
         return $this;
@@ -375,7 +375,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
       *   Fetches the table metadata
       *
       *   @access public
-      *   @return DBALGateway\Metadata\Table
+      *   @return Doctrine\DBAL\Schema\Table
       */
     public function getMetaData()
     {
