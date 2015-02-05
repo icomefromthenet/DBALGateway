@@ -19,7 +19,7 @@ class TableGatewayTest extends TestsWithFixture
         
         $mock_builder = $this->getMock('DBALGateway\Builder\BuilderInterface');
         $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_table = $this->getMock('DBALGateway\Table\AbstractTable',array('newQueryObject'),array('users',$doctrine,$mock_event,$meta,$result_set,$mock_builder));
+        $mock_table = $this->getMock('DBALGateway\Table\AbstractTable',array('newQueryBuilder'),array('users',$doctrine,$mock_event,$meta,$result_set,$mock_builder));
         
         $this->assertEquals($mock_event,$mock_table->getEventDispatcher());
         $this->assertEquals($doctrine,$mock_table->getAdapater());
@@ -37,7 +37,7 @@ class TableGatewayTest extends TestsWithFixture
         $meta       = $this->getTableMetaData();
         
         $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_table = $this->getMock('DBALGateway\Table\AbstractTable',array('newQueryObject'),array('users',$doctrine,$mock_event,$meta));
+        $mock_table = $this->getMock('DBALGateway\Table\AbstractTable',array('newQueryBuilder'),array('users',$doctrine,$mock_event,$meta));
         
         $this->assertEquals(null,$mock_table->getEntityBuilder());
         $this->assertInstanceOf('Doctrine\Common\Collections\Collection',$mock_table->getResultSet());
@@ -51,7 +51,7 @@ class TableGatewayTest extends TestsWithFixture
         $meta       = $this->getTableMetaData();
         
         $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_table = $this->getMock('DBALGateway\Table\AbstractTable',array('newQueryObject'),array('users',$doctrine,$mock_event,$meta));
+        $mock_table = $this->getMock('DBALGateway\Table\AbstractTable',array('newQueryBuilder'),array('users',$doctrine,$mock_event,$meta));
         
         $meta->addVirtualColumn('mycolumn','integer',array("unsigned" => true));
         $meta->addVirtualColumn('b_column','boolean');
@@ -357,6 +357,6 @@ class TableGatewayTest extends TestsWithFixture
         
         $this->assertEquals(null,$result);        
     }
-    
+
 }
 /* End of File */

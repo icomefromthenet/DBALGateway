@@ -460,10 +460,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
       *  @access public
       *  @return QueryBuilder
       */
-    public function newQueryBuilder()
-    {
-        throw new Exception('not implemented');
-    }
+    abstract public function newQueryBuilder();
     
     
     /**
