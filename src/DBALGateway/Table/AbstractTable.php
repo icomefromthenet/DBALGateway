@@ -9,6 +9,7 @@ use DBALGateway\Container\InsertContainer;
 use DBALGateway\Container\SelectContainer;
 use DBALGateway\Container\UpdateContainer;
 use DBALGateway\Builder\BuilderInterface;
+use DBALGateway\Builder\AliasInterface;
 use DBALGateway\Metadata\Table;
 use Doctrine\DBAL\Schema\Table as DTable;
 use Doctrine\Common\Collections\Collection;
@@ -23,7 +24,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
   *  @author Lewis Dyer <getintouch@icomefromthenet.com>
   *  @since 0.0.1
   */
-abstract class AbstractTable implements ContainerFactoryInterface, TableInterface
+abstract class AbstractTable implements ContainerFactoryInterface, TableInterface, AliasInterface
 {
     /**
       *  @var integer id of the last insert operation
@@ -69,6 +70,13 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
       *  @var DBALGateway\Builder\BuilderInterface
       */
     protected $entity_builder;
+    
+    
+    /**
+     * @var string an alias to use during join queries
+     */ 
+    protected $tableAlias;
+    
     
     /**
       *  Class Constructor 
@@ -474,6 +482,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
     public function convertToPhp(array &$result)
     {
         $platform = $this->adapter->getDatabasePlatform();
+        $alias    = $this->getTableQueryAlias();
         
         if($this->meta instanceof Table ) {
             $columns = $this->meta->getCombinedColumns();
@@ -485,8 +494,11 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
         
         foreach($columns as $column) {
             $name = $column->getName();
-            if(isset($result[$name]) === true) {
+            if(true === isset($result[$name])) {
                 $result[$name] = $column->getType()->convertToPHPValue($result[$name],$platform);
+            } elseif (true === isset($result[$alias.'_'.$name])) {
+                $name = $alias.'_'.$name;
+                $result[$name] = $column->getType()->convertToPHPValue($result[$name],$platform);    
             }
         }
         
@@ -514,6 +526,32 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
     public function rowsAffected()
     {
         return $this->affected;
+    }
+    
+    /**
+     * Return the table query alias.
+     * 
+     * @return string the assigned alias or empty string
+     */ 
+    public function getTableQueryAlias()
+    {
+        return $this->tableAlias;
+    }
+    
+    /**
+     * Fetch the table query alias
+     * 
+     * @return void
+     * @param string    $sAlias The query alias
+     */ 
+    public function setTableQueryAlias($sAlias)
+    {
+        $this->tableAlias = (string) $sAlias;
+        
+        if($this->entity_builder instanceof AliasInterface) {
+            $this->entity_builder->setTableQueryAlias($sAlias);
+        }  
+        
     }
     
     

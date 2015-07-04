@@ -101,6 +101,24 @@ class TableGatewayTest extends TestsWithFixture
     }
     
     
+    public function testQueryAliasProperty()
+    {
+        $doctrine   = $this->getDoctrineConnection();
+        $meta       = $this->getTableMetaData();
+        
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_table = $this->getMock('DBALGateway\Table\AbstractTable',array('newQueryBuilder'),array('users',$doctrine,$mock_event,$meta));
+      
+        $sAlias = 'a';
+      
+        $mock_table->setTableQueryAlias($sAlias);
+        
+        $this->assertEquals($sAlias,$mock_table->getTableQueryAlias());
+        
+        
+    }
+    
+    
     public function testInsertQuery()
     {
         $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
@@ -287,6 +305,32 @@ class TableGatewayTest extends TestsWithFixture
         $this->assertInternalType('integer',$result[0]['id']);
         $this->assertInstanceOf('\DateTime',$result[0]['dte_created']);
         $this->assertInstanceOf('\DateTime',$result[0]['dte_updated']);
+        
+    }
+    
+    public function testSelectFindWithBuilderAnResultSetAnAlias()
+    {
+        $mock_event      = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_builder    = $this->getMock('DBALGateway\Builder\BuilderInterface');
+        $mock_collection = new \Doctrine\Common\Collections\ArrayCollection;
+        $mock_table      = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData(),$mock_collection,$mock_builder);
+        
+        $mock_table->setTableQueryAlias('a');
+        
+        $mock_builder->expects($this->once())
+                     ->method('build')
+                     ->will($this->returnArgument(0));
+        
+        $result = $mock_table->selectQuery()
+                ->start()
+                    ->filterByUser(1)
+                ->end()
+            ->find();
+        
+        $this->assertEquals($result[0]['a_id'],1);
+        $this->assertInternalType('integer',$result[0]['a_id']);
+        $this->assertInstanceOf('\DateTime',$result[0]['a_dte_created']);
+        $this->assertInstanceOf('\DateTime',$result[0]['a_dte_updated']);
         
     }
     
