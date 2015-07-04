@@ -41,7 +41,12 @@ class SelectContainer extends AbstractContainer
     public function start()
     {
         if($this->bound === false) {
-            $alias = empty($this->gateway->getTableQueryAlias()) ? null : $this->gateway->getTableQueryAlias();
+            $alias = $this->gateway->getTableQueryAlias();
+            
+            if(true === empty($alias)) {
+                $alias = null;
+            }
+            
             $this->query->select($this->bindAliasToColumns(array_keys($this->gateway->getMetaData()->getColumns())));
             $this->query->from($this->gateway->getMetaData()->getName(),$alias);
             $this->bound = true;    
@@ -54,7 +59,12 @@ class SelectContainer extends AbstractContainer
     public function where()
     {
         if($this->bound === false) {
-            $alias = empty($this->gateway->getTableQueryAlias()) ? null : $this->gateway->getTableQueryAlias();
+            $alias = $this->gateway->getTableQueryAlias();
+            
+            if(true === empty($alias)) {
+                $alias = null;
+            }
+            
             $this->query->select($this->bindAliasToColumns(array_keys($this->gateway->getMetaData()->getColumns())));
             $this->query->from($this->gateway->getMetaData()->getName(),$alias);
             $this->bound = true;    
