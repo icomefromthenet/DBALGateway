@@ -18,6 +18,7 @@ class InsertContainer extends AbstractContainer
       */
     protected $type = array();
     
+
     /**
       *  Adds a column to the internal collection
       *

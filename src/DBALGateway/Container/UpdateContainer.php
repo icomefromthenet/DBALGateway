@@ -22,6 +22,11 @@ class UpdateContainer extends AbstractContainer
             throw new GatewayException(sprintf('column name %s not found under table %s unable to add to update statement',$column,$this->gateway->getMetaData()->getName()));
         }
         
+        $sAlias = $this->gateway->getTableQueryAlias();
+        if(false === empty($sAlias)) {
+            $column = $sAlias .'.'.$column;    
+        }
+        
         $this->query->set($column,':'.$column);
         $this->query->createNamedParameter($value,$this->gateway->getMetaData()->getColumn($column)->getType(),':'.$column);
         
@@ -31,7 +36,7 @@ class UpdateContainer extends AbstractContainer
     
     public function start()
     {
-        $this->query->update($this->gateway->getMetaData()->getName());
+        $this->query->update($this->gateway->getMetaData()->getName(),$this->gateway->getTableQueryAlias());
         
         return $this;
     }
