@@ -11,7 +11,7 @@ class DeleteContainer extends AbstractContainer
       */
     public function start()
     {
-        $this->query->delete($this->gateway->getMetaData()->getName(),$this->gateway->getTableQueryAlias());
+        $this->query->delete($this->gateway->getMetaData()->getName(),$this->getQueryAlias());
         return $this->query;
     }
         

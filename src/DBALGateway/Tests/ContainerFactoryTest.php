@@ -232,5 +232,39 @@ class ContainerFactoryTest extends TestsWithFixture
         
     }
     
+    public function testSelectQueryWithAlias()
+    {
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
+        
+        $mock_table->setTableQueryAlias('a');
+        
+        $select_query = $mock_table->selectQuery()
+            ->start()
+                ->filterByUser(1);
+                
+        $this->assertEquals('SELECT a.id AS a_id, a.username AS a_username, a.first_name AS a_first_name, a.last_name AS a_last_name, a.dte_created AS a_dte_created, a.dte_updated AS a_dte_updated FROM users a WHERE id = :id',$select_query->getSql());
+        
+    }
+    
+    
+    public function testSelectQueryExtraHelpers()
+    {
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
+        
+        $mock_table->setTableQueryAlias('a');
+        
+        $oSelectContainer = $mock_table->selectQuery();
+        
+        $this->assertEquals('alias',$oSelectContainer->extractAliasField('a','a.alias'));
+        $this->assertEquals('alias',$oSelectContainer->extractAliasField('','alias'));
+        $this->assertEquals('alias',$oSelectContainer->extractAliasField(null,'alias'));
+           
+        $this->assertEquals('a.alias',$oSelectContainer->convertToAliasField('a','alias'));   
+        $this->assertEquals('alias',$oSelectContainer->convertToAliasField('','alias'));   
+        
+        $this->assertEquals('a',$oSelectContainer->getQueryAlias());   
+    }
 }
 /* End of Class */

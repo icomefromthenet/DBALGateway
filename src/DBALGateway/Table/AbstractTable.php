@@ -560,54 +560,57 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
     
     
     /**
-      *   Create a new select query container
+      *   Create a new select query container, will pass in the assigned alias
       *   
       *   @access public
       *   @return SelectContainer
       */
     public function selectQuery()
     {
-        $this->head = new SelectContainer($this,$this->newQueryBuilder());
+        $this->head = new SelectContainer($this, $this->newQueryBuilder(), $this->getTableQueryAlias());
         
         return $this->head;
     }
     
     
     /**
-      *  Create a new delete query container
+      *  Create a new delete query container, not using alias for delete queries as
+      *  not well supported across vendors
       *  
       *  @access public
       *  @return DeleteContainer
       */
     public function deleteQuery()
     {
-        $this->head = new DeleteContainer($this,$this->newQueryBuilder());
+        $this->head = new DeleteContainer($this, $this->newQueryBuilder(), '');
         
         return $this->head;
     }
     
     /**
-      *  Create a new insert query container
+      *  Create a new insert query container not using alias queries as
+      *  not well supported across vendors
       *  
       *  @access public
       *  @return InsertContainer
       */
     public function insertQuery()
     {
-        $this->head = new InsertContainer($this,null);
+        $this->head = new InsertContainer($this, null, '');
         
         return $this->head;
     }
     
     /**
-      *   Create a new update query container
+      *  Create a new update query container not using an alias queries as
+      *  not well supported across vendors
       *   
       *   @access public
       *   @return UpdateContainer
       */
     public function updateQuery()
     {
-        $this->head = new UpdateContainer($this,$this->newQueryBuilder());
+        $this->head = new UpdateContainer($this, $this->newQueryBuilder(), '');
         
         return $this->head;
     }

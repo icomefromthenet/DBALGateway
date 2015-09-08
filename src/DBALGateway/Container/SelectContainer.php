@@ -8,27 +8,6 @@ class SelectContainer extends AbstractContainer
 {
     
     
-    /**
-     * Map columns with alias
-     */ 
-    protected function bindAliasToColumns(array $aColumns) 
-    {
-        
-        $alias =$this->gateway->getTableQueryAlias();
-        
-        if(false === empty($alias)) {
-        
-            foreach($aColumns as &$sColname) {
-                $sColname = $alias.'.'.$sColname .' AS '.$alias .'_'. $sColname; 
-            }
-        
-        }
-        
-        return $aColumns;
-    }
-    
-    
-    
     
     /**
       *  @var boolean has query been bound to a table  
@@ -41,14 +20,10 @@ class SelectContainer extends AbstractContainer
     public function start()
     {
         if($this->bound === false) {
-            $alias = $this->gateway->getTableQueryAlias();
+            $sAlias = $this->getQueryAlias();
             
-            if(true === empty($alias)) {
-                $alias = null;
-            }
-            
-            $this->query->select($this->bindAliasToColumns(array_keys($this->gateway->getMetaData()->getColumns())));
-            $this->query->from($this->gateway->getMetaData()->getName(),$alias);
+            $this->query->select($this->bindAliasToColumns($sAlias,array_keys($this->gateway->getMetaData()->getColumns())));
+            $this->query->from($this->gateway->getMetaData()->getName(),$sAlias);
             $this->bound = true;    
         }
         
@@ -59,14 +34,10 @@ class SelectContainer extends AbstractContainer
     public function where()
     {
         if($this->bound === false) {
-            $alias = $this->gateway->getTableQueryAlias();
+            $sAlias = $this->getQueryAlias();
             
-            if(true === empty($alias)) {
-                $alias = null;
-            }
-            
-            $this->query->select($this->bindAliasToColumns(array_keys($this->gateway->getMetaData()->getColumns())));
-            $this->query->from($this->gateway->getMetaData()->getName(),$alias);
+            $this->query->select($this->bindAliasToColumns($sAlias,array_keys($this->gateway->getMetaData()->getColumns())));
+            $this->query->from($this->gateway->getMetaData()->getName(),$sAlias);
             $this->bound = true;    
         }
         
