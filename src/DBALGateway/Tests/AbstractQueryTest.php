@@ -175,5 +175,18 @@ class AbstractQueryTest extends TestsWithFixture
         $this->assertRegExp('/DELETE FROM users u WHERE u.id = :user_id ORDER BY u.ome ASC/',$mock_query->getSql());
     }
     
+    
+    public function testDefaultAlias()
+    {
+        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
+        
+        $mock_query = $mock->newQueryBuilder(); 
+        $mock_query->setDefaultAlias('a');
+        
+        $this->assertEquals('a',$mock_query->getDefaultAlias());
+        
+    }
+    
 }
 /* End of Class */

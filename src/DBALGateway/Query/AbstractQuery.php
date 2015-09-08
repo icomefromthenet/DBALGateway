@@ -19,6 +19,10 @@ abstract class AbstractQuery extends QueryBuilder implements QueryInterface
       */
     protected $table_gateway;
  
+    /**
+      * @var  string the default table alias
+      */
+    protected $sDefaultAlias;
  
     /**
       *  Class Constructor
@@ -171,6 +175,28 @@ abstract class AbstractQuery extends QueryBuilder implements QueryInterface
         }
         
         return $this;
+    }
+    
+    
+    /**
+     * Sets a default alias. 
+     * 
+     * @param   string    $sAlias the default alias to use
+     * @return  void
+     */
+    public function setDefaultAlias($sAlias)
+    {
+        $this->sDefaultAlias = (string) $sAlias;
+    }
+    
+    /**
+     * Return the default alias
+     * 
+     * @return  string  The default alias
+     */ 
+    public function getDefaultAlias()
+    {
+        return $this->sDefaultAlias;
     }
     
     

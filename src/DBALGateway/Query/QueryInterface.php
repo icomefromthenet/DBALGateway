@@ -37,6 +37,20 @@ interface QueryInterface
     public function setGateway(TableInterface $table);
     
     
+    /**
+     * Sets a default alias. 
+     * 
+     * @param   string    $sAlias the default alias to use
+     * @return  void
+     */
+    public function setDefaultAlias($sAlias);
+    
+    /**
+     * Return the default alias
+     * 
+     * @return  string  The default alias
+     */ 
+    public function getDefaultAlias();
     
     
 }

@@ -31,7 +31,7 @@ class UpdateContainer extends AbstractContainer
     
     public function start()
     {
-        $this->query->update($this->gateway->getMetaData()->getName(),$this->gateway->getTableQueryAlias());
+        $this->query->update($this->gateway->getMetaData()->getName(),$this->getQueryAlias());
         
         return $this;
     }

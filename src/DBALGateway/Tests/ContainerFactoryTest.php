@@ -167,6 +167,8 @@ class ContainerFactoryTest extends TestsWithFixture
         $fname    = 'myfname';
         $lname    = 'mylname';
         
+        $mock_table->setTableQueryAlias('a');     
+        
         $query = $mock_table->updateQuery()
             ->start()
                 ->addColumn('username',$username)
@@ -175,6 +177,9 @@ class ContainerFactoryTest extends TestsWithFixture
                 ->addColumn('last_name',$lname)
                 ->addColumn('dte_updated',$new_date)
             ->where(); 
+       
+        # test if alias was injected in AbstractQuery Constructor
+        $this->assertEquals('',$query ->getDefaultAlias());
        
         $this->assertEquals('UPDATE users SET username = :username, dte_created = :dte_created, first_name = :first_name, last_name = :last_name, dte_updated = :dte_updated', $query->getSql());
         
@@ -199,9 +204,15 @@ class ContainerFactoryTest extends TestsWithFixture
         $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
+        $mock_table->setTableQueryAlias('a');     
+        
         $delete_query = $mock_table->deleteQuery()
             ->start()
                 ->filterByUser(1);
+            
+        
+        # test if alias was injected in AbstractQuery Constructor
+        $this->assertEquals('',$delete_query->getDefaultAlias());
             
         $this->assertEquals('DELETE FROM users WHERE id = :id',$delete_query->getSql());
         
@@ -242,6 +253,9 @@ class ContainerFactoryTest extends TestsWithFixture
         $select_query = $mock_table->selectQuery()
             ->start()
                 ->filterByUser(1);
+        
+        # test if alias was injected in AbstractQuery Constructor
+        $this->assertEquals('a',$select_query->getDefaultAlias());
                 
         $this->assertEquals('SELECT a.id AS a_id, a.username AS a_username, a.first_name AS a_first_name, a.last_name AS a_last_name, a.dte_created AS a_dte_created, a.dte_updated AS a_dte_updated FROM users a WHERE id = :id',$select_query->getSql());
         

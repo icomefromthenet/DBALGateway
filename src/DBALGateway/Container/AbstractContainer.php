@@ -3,6 +3,7 @@ namespace DBALGateway\Container;
 
 use DBALGateway\Table\TableInterface;
 use DBALGateway\Query\AbstractQuery;
+use DBALGateway\Query\QueryInterface;
 
 abstract class AbstractContainer
 {
@@ -33,6 +34,11 @@ abstract class AbstractContainer
         $this->gateway = $gateway;
         $this->query   = $query;
         $this->sAlias = (string) $sAlias;
+        
+        # inject the alias into query builder
+        if($query instanceof QueryInterface) {
+            $this->query->setDefaultAlias($sAlias);
+        }
     }
     
    
