@@ -6,6 +6,7 @@ use PHPUnit_Extensions_Database_Operation_Composite;
 use PHPUnit_Extensions_Database_TestCase;
 use DBALGateway\Tests\Base\DBOperationSetEnv;
 use DBALGateway\Metadata\Table;
+use DBALGateway\Metadata\Schema;
 
 class TestsWithFixture extends PHPUnit_Extensions_Database_TestCase
 {
@@ -90,19 +91,26 @@ class TestsWithFixture extends PHPUnit_Extensions_Database_TestCase
     
     public function getTableMetaData()
     {
-        $table = new Table('users');
-        
-        $table->addColumn('id',"integer", array("unsigned" => true));
-        $table->addColumn('username', "string", array("length" => 32));
-        $table->addColumn('first_name', "string", array("length" => 45));
-        $table->addColumn('last_name',"string", array("length" => 45));
-        $table->addColumn('dte_created','datetime');
-        $table->addColumn('dte_updated','datetime');
-        $table->setPrimaryKey(array("id"));
-        
-        return $table;
+        return $this->getTestScheam()->getTable('users');
     }
     
+    public function getTestScheam()
+    {
+        $oSchema = new Schema();
+        
+        $oTable = $oSchema->createTable('users');
+        
+        $oTable->addColumn('id',"integer", array("unsigned" => true));
+        $oTable->addColumn('username', "string", array("length" => 32));
+        $oTable->addColumn('first_name', "string", array("length" => 45));
+        $oTable->addColumn('last_name',"string", array("length" => 45));
+        $oTable->addColumn('dte_created','datetime');
+        $oTable->addColumn('dte_updated','datetime');
+        $oTable->setPrimaryKey(array("id"));
+        
+        return $oSchema;
+        
+    }
     
     protected $app;
 

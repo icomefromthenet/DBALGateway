@@ -1,9 +1,9 @@
 <?php
 namespace DBALGateway\Tests\Base\Mock;
 
-use DBALGateway\Table\AbstractTable;
+use DBALGateway\Table\SchemaAwareTable;
 
-class MockUserTableGateway extends AbstractTable
+class MockUserTableGateway extends SchemaAwareTable
 {
     /**
       *  Create a new instance of the querybuilder

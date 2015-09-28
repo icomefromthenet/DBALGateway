@@ -108,7 +108,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
         $this->initilize();
         
         # table name and the meta-data name match?
-        if($this->table_name !== $this->meta->getName()) {
+        if($this->table_name !== $meta->getName()) {
             throw new GatewayException('The table name and the meta-data name do not match');
         }
         
