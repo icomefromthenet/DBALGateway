@@ -344,13 +344,26 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
     
     /**
       *   Returns the doctrine DBAL connection
-      *
+      *    
+      *   NOTE::Bad Spelling made it into release
+      * 
       *   @access public
       *   @return Doctrine\DBAL\Connection
       */
     public function getAdapater()
     {
         return $this->adapter;
+    }
+    
+    /**
+      *   Returns the doctrine DBAL connection
+      *
+      *   @access public
+      *   @return Doctrine\DBAL\Connection
+      */
+    public function getAdapter()
+    {
+        return $this->getAdapater();
     }
     
     /**

@@ -23,6 +23,7 @@ class TableGatewayTest extends TestsWithFixture
         
         $this->assertEquals($mock_event,$mock_table->getEventDispatcher());
         $this->assertEquals($doctrine,$mock_table->getAdapater());
+        $this->assertEquals($doctrine,$mock_table->getAdapter());
         $this->assertEquals($meta,$mock_table->getMetaData());
         $this->assertEquals($mock_builder,$mock_table->getEntityBuilder());
         $this->assertEquals($result_set,$mock_table->getResultSet());
