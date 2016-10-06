@@ -21,8 +21,8 @@
     },
     
     "require" : {
-        "symfony/event-dispatcher" : "~2.2",
-        "doctrine/dbal"            : ">=2.3",
+        "symfony/event-dispatcher" : "^2.8",
+        "doctrine/dbal"            : "^2.5",
         "monolog/monolog"          : "~1.4"
     },
     

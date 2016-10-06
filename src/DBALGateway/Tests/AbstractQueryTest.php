@@ -54,7 +54,7 @@ class AbstractQueryTest extends TestsWithFixture
         $mock_query->from('users', 'u');
         $mock_query->offset(5);
         
-        $this->assertEquals('SELECT u.id, p.id FROM users u OFFSET 5',$mock_query->getSql());
+        $this->assertEquals('SELECT u.id, p.id FROM users u LIMIT 18446744073709551615 OFFSET 5',$mock_query->getSql());
     }
     
     /**
@@ -83,7 +83,7 @@ class AbstractQueryTest extends TestsWithFixture
         
         $mock_query->delete('users', 'u')->where('u.id = :user_id')->setParameter(':user_id', 1)->offset(100);
         
-        $this->assertRegExp('/DELETE FROM users u WHERE u.id = :user_id OFFSET 100/',$mock_query->getSql());
+        $this->assertRegExp('/DELETE FROM users u WHERE u.id = :user_id LIMIT 18446744073709551615 OFFSET 100/',$mock_query->getSql());
     }
     
     
@@ -121,7 +121,7 @@ class AbstractQueryTest extends TestsWithFixture
         
         $mock_query->update('users', 'u')->set('u.password', md5('password'))->offset(100);
         
-        $this->assertRegExp('/UPDATE users u SET u.password = 5f4dcc3b5aa765d61d8327deb882cf99 OFFSET 100/',$mock_query->getSql());
+        $this->assertRegExp('/UPDATE users u SET u.password = 5f4dcc3b5aa765d61d8327deb882cf99 LIMIT 18446744073709551615 OFFSET 100/',$mock_query->getSql());
     }
     
     
