@@ -12,18 +12,19 @@
             "homepage": "http://www.icomefromthenet.com"
         }
     ],
-
+    
     "require-dev" : {
-        "icomefromthenet/migration" : "dev-master",
-        "silex/silex"               : "~1.2",
-        "phpunit/phpunit"           : "3.7.*",
-        "phpunit/dbunit"            : ">=1.2"
+        "phpunit/phpunit"           : "^7"
+        
     },
     
     "require" : {
+        "php": "^7.1",
+        "ext-pdo": "*",
         "symfony/event-dispatcher" : "^2.8",
-        "doctrine/dbal"            : "^2.5",
-        "monolog/monolog"          : "~1.4"
+        "doctrine/dbal"            : "^2.8",
+        "doctrine/collections"     : "^1.5",
+        "monolog/monolog"          : "^1.2"
     },
     
     "autoload": {

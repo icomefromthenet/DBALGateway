@@ -1,9 +1,10 @@
 <?php
 namespace DBALGateway\Tests\Base;
 
-use \PHPUnit_Extensions_Database_Operation_IDatabaseOperation;
-use \PHPUnit_Extensions_Database_DB_IDatabaseConnection;
-use \PHPUnit_Extensions_Database_DataSet_IDataSet;
+use PHPUnit\Extensions\Database\Operation\IDatabaseOperation as PHPUnit_Extensions_Database_Operation_IDatabaseOperation;
+use PHPUnit\Extensions\Database\DB\IDatabaseConnection as PHPUnit_Extensions_Database_DB_IDatabaseConnection;
+use PHPUnit\Extensions\Database\DataSet\IDataSet as PHPUnit_Extensions_Database_DataSet_IDataSet;
+
 
 class DBOperationSetEnv implements PHPUnit_Extensions_Database_Operation_IDatabaseOperation
 {

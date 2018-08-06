@@ -10,7 +10,7 @@ class TableEventTest extends TestsWithFixture
     
     public function testNewTableEvent()
     {
-        $table = $this->getMock('\DBALGateway\Table\TableInterface');
+        $table = $this->getMockBuilder('\DBALGateway\Table\TableInterface')->getMock();
         $event = new TableEvent($table);
         
         $this->assertEquals($table,$event->getTable());

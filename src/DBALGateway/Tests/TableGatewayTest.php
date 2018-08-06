@@ -17,9 +17,12 @@ class TableGatewayTest extends TestsWithFixture
         $meta       = $this->getTableMetaData();
         $result_set = new ArrayCollection();
         
-        $mock_builder = $this->getMock('DBALGateway\Builder\BuilderInterface');
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_table = $this->getMock('DBALGateway\Table\AbstractTable',array('newQueryBuilder'),array('users',$doctrine,$mock_event,$meta,$result_set,$mock_builder));
+        $mock_builder = $this->getMockBuilder('DBALGateway\Builder\BuilderInterface')->getMock();
+        $mock_event = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
+        $mock_table = $this->getMockBuilder('DBALGateway\Table\AbstractTable')
+                            ->setMethods(['newQueryBuilder'])
+                            ->setConstructorArgs(['users',$doctrine,$mock_event,$meta,$result_set,$mock_builder])
+                            ->getMock();
         
         $this->assertEquals($mock_event,$mock_table->getEventDispatcher());
         $this->assertEquals($doctrine,$mock_table->getAdapater());
@@ -37,8 +40,11 @@ class TableGatewayTest extends TestsWithFixture
         $doctrine   = $this->getDoctrineConnection();
         $meta       = $this->getTableMetaData();
         
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_table = $this->getMock('DBALGateway\Table\AbstractTable',array('newQueryBuilder'),array('users',$doctrine,$mock_event,$meta));
+        $mock_event = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
+        $mock_table = $this->getMockBuilder('DBALGateway\Table\AbstractTable')
+                           ->setMethods(['newQueryBuilder'])
+                           ->setConstructorArgs(['users',$doctrine,$mock_event,$meta])
+                           ->getMock();
         
         $this->assertEquals(null,$mock_table->getEntityBuilder());
         $this->assertInstanceOf('Doctrine\Common\Collections\Collection',$mock_table->getResultSet());
@@ -51,8 +57,11 @@ class TableGatewayTest extends TestsWithFixture
         $doctrine   = $this->getDoctrineConnection();
         $meta       = $this->getTableMetaData();
         
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_table = $this->getMock('DBALGateway\Table\AbstractTable',array('newQueryBuilder'),array('users',$doctrine,$mock_event,$meta));
+        $mock_event = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
+        $mock_table = $this->getMockBuilder('DBALGateway\Table\AbstractTable')
+                           ->setMethods(['newQueryBuilder'])
+                           ->setConstructorArgs(['users',$doctrine,$mock_event,$meta])
+                           ->getMock();
         
         $meta->addVirtualColumn('mycolumn','integer',array("unsigned" => true));
         $meta->addVirtualColumn('b_column','boolean');
@@ -107,8 +116,11 @@ class TableGatewayTest extends TestsWithFixture
         $doctrine   = $this->getDoctrineConnection();
         $meta       = $this->getTableMetaData();
         
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_table = $this->getMock('DBALGateway\Table\AbstractTable',array('newQueryBuilder'),array('users',$doctrine,$mock_event,$meta));
+        $mock_event = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
+        $mock_table = $this->getMockBuilder('DBALGateway\Table\AbstractTable')
+                        ->setMethods(['newQueryBuilder'])
+                        ->setConstructorArgs(['users',$doctrine,$mock_event,$meta])
+                        ->getMock();
       
         $sAlias = 'a';
       
@@ -122,7 +134,7 @@ class TableGatewayTest extends TestsWithFixture
     
     public function testInsertQuery()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
         $mock_event->expects($this->exactly(4))
                    ->method('dispatch')
                    ->with($this->logicalOr(
@@ -149,14 +161,14 @@ class TableGatewayTest extends TestsWithFixture
         ->insert();
         
         $this->assertTrue($success);
-        $this->assertEquals(101,$mock_table->lastInsertId());
+        $this->assertNotEmpty($mock_table->lastInsertId());
         $this->assertEquals($mock_table->rowsAffected(),1);
     }
     
     
     public function testDeleteQuery()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
         $mock_event->expects($this->exactly(4))
                    ->method('dispatch')
                    ->with($this->logicalOr(
@@ -182,7 +194,7 @@ class TableGatewayTest extends TestsWithFixture
 
     public function testUpdateQuery()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
         
         $mock_event->expects($this->exactly(4))
                    ->method('dispatch')
@@ -220,7 +232,7 @@ class TableGatewayTest extends TestsWithFixture
     public function testSelectFind()
     {
         
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
         $mock_event->expects($this->exactly(4))
                    ->method('dispatch')
                    ->with($this->logicalOr(
@@ -248,7 +260,7 @@ class TableGatewayTest extends TestsWithFixture
     public function testSelectFindNoObjects()
     {
         
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $result = $mock_table->selectQuery()
@@ -263,8 +275,8 @@ class TableGatewayTest extends TestsWithFixture
     
     public function testSelectFindWithBuilder()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_builder = $this->getMock('DBALGateway\Builder\BuilderInterface');
+        $mock_event = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
+        $mock_builder = $this->getMockBuilder('DBALGateway\Builder\BuilderInterface')->getMock();
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData(),null,$mock_builder);
           
         
@@ -287,8 +299,8 @@ class TableGatewayTest extends TestsWithFixture
     
     public function testSelectFindWithBuilderAnResultSet()
     {
-        $mock_event      = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_builder    = $this->getMock('DBALGateway\Builder\BuilderInterface');
+        $mock_event      = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
+        $mock_builder    = $this->getMockBuilder('DBALGateway\Builder\BuilderInterface')->getMock();
         $mock_collection = new \Doctrine\Common\Collections\ArrayCollection;
         $mock_table      = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData(),$mock_collection,$mock_builder);
         
@@ -311,8 +323,8 @@ class TableGatewayTest extends TestsWithFixture
     
     public function testSelectFindWithBuilderAnResultSetAnAlias()
     {
-        $mock_event      = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_builder    = $this->getMock('DBALGateway\Builder\BuilderInterface');
+        $mock_event      = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
+        $mock_builder    = $this->getMockBuilder('DBALGateway\Builder\BuilderInterface')->getMock();
         $mock_collection = new \Doctrine\Common\Collections\ArrayCollection;
         $mock_table      = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData(),$mock_collection,$mock_builder);
         
@@ -338,7 +350,7 @@ class TableGatewayTest extends TestsWithFixture
     public function testSelectFindOne()
     {
         
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
         
         $mock_event->expects($this->exactly(4))
                    ->method('dispatch')
@@ -367,8 +379,8 @@ class TableGatewayTest extends TestsWithFixture
     public function testSelectFindOneWithBuilder()
     {
         
-        $mock_event   = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_builder = $this->getMock('DBALGateway\Builder\BuilderInterface');
+        $mock_event   = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
+        $mock_builder = $this->getMockBuilder('DBALGateway\Builder\BuilderInterface')->getMock();
         
         $mock_builder->expects($this->once())
                      ->method('build')
@@ -389,8 +401,8 @@ class TableGatewayTest extends TestsWithFixture
     public function testSelectFindOneWithBuilderNoObject()
     {
         
-        $mock_event   = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $mock_builder = $this->getMock('DBALGateway\Builder\BuilderInterface');
+        $mock_event   = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->getMock();
+        $mock_builder = $this->getMockBuilder('DBALGateway\Builder\BuilderInterface')->getMock();
         
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData(),null,$mock_builder);
         

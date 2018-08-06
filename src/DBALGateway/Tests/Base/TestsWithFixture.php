@@ -2,13 +2,13 @@
 namespace DBALGateway\Tests\Base;
 
 use PDO;
-use PHPUnit_Extensions_Database_Operation_Composite;
-use PHPUnit_Extensions_Database_TestCase;
+use PHPUnit\Extensions\Database\Operation\Composite as PHPUnit_Extensions_Database_Operation_Composite;
+use PHPUnit\Framework\TestCase;
 use DBALGateway\Tests\Base\DBOperationSetEnv;
 use DBALGateway\Metadata\Table;
 use DBALGateway\Metadata\Schema;
 
-class TestsWithFixture extends PHPUnit_Extensions_Database_TestCase
+class TestsWithFixture extends TestCase
 {
     
     //  ----------------------------------------------------------------------------

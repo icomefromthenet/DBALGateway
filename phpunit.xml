@@ -7,14 +7,13 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         syntaxCheck="false"
          bootstrap="vendor/autoload.php"
 >
     <php>
-        <var name="DB_DSN" value="mysql:dbname=c9;host=172.17.6.175" />
+        <var name="DB_DSN" value="mysql:dbname=c9;host=172.17.0.78" />
         <var name="DB_USER" value="icomefromthenet" />
         <var name="DB_PASSWD" value="" />
-        <var name="DB_HOST" value="172.17.6.175" />
+        <var name="DB_HOST" value="172.17.0.78" />
         <var name="DB_DBNAME" value="c9" />
     </php>
     <testsuites>

@@ -7,3 +7,4 @@ faker/config/*.php
 migrations/config/*.php
 composer.lock
 vendor
+.c9
