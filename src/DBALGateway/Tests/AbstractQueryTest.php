@@ -13,7 +13,7 @@ class AbstractQueryTest extends TestsWithFixture
     
     public function testLimitAlias()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder();        
@@ -30,7 +30,7 @@ class AbstractQueryTest extends TestsWithFixture
       */
     public function testLimitBadParamException()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 
@@ -45,7 +45,7 @@ class AbstractQueryTest extends TestsWithFixture
     
     public function testOffsetAlias()
     {
-       $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+       $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 
@@ -63,7 +63,7 @@ class AbstractQueryTest extends TestsWithFixture
       */
     public function testOffsetBadParamException()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 
@@ -76,7 +76,7 @@ class AbstractQueryTest extends TestsWithFixture
     
     public function testDeleteQueryWithOffset()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 
@@ -89,7 +89,7 @@ class AbstractQueryTest extends TestsWithFixture
     
     public function testDeleteQueryWithLimit()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 
@@ -102,7 +102,7 @@ class AbstractQueryTest extends TestsWithFixture
     
     public function testDeleteQueryWithLimitOffset()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 
@@ -114,7 +114,7 @@ class AbstractQueryTest extends TestsWithFixture
     
      public function testUpdateQueryWithOffset()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 
@@ -127,7 +127,7 @@ class AbstractQueryTest extends TestsWithFixture
     
     public function testUpdateQueryWithLimit()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 
@@ -140,7 +140,7 @@ class AbstractQueryTest extends TestsWithFixture
     
     public function testUpdateQueryWithLimitOffset()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 
@@ -153,7 +153,7 @@ class AbstractQueryTest extends TestsWithFixture
     
     public function testUpdateOrderBy()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 
@@ -165,7 +165,7 @@ class AbstractQueryTest extends TestsWithFixture
     
      public function testDeleteOrderBy()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 
@@ -178,7 +178,7 @@ class AbstractQueryTest extends TestsWithFixture
     
     public function testDefaultAlias()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_query = $mock->newQueryBuilder(); 

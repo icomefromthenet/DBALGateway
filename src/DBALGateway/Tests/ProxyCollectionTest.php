@@ -16,7 +16,7 @@ class ProxyCollectionTest extends TestsWithFixture
         $oSchema = $this->getTestScheam();
         $oProxy  = new GatewayProxyCollection($oSchema);
         
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         
@@ -45,7 +45,7 @@ class ProxyCollectionTest extends TestsWithFixture
         $oSchema = $this->getTestScheam();
         $oProxy  = new GatewayProxyCollection($oSchema);
         
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
     
         
@@ -65,7 +65,7 @@ class ProxyCollectionTest extends TestsWithFixture
     
     public function testAwareCollectionAbstract()
     {
-        $mock_event = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $oSchema = $this->getTestScheam();
         $oProxy  = new GatewayProxyCollection($oSchema);
         
