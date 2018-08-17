@@ -2,14 +2,21 @@
 namespace DBALGateway\Tests\Base;
 
 use PDO;
-use PHPUnit\Extensions\Database\Operation\Composite as PHPUnit_Extensions_Database_Operation_Composite;
+use PHPUnit\DbUnit\Operation\Composite;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\DbUnit\Operation\Factory;
+
 use DBALGateway\Tests\Base\DBOperationSetEnv;
 use DBALGateway\Metadata\Table;
 use DBALGateway\Metadata\Schema;
+use PHPUnit\DbUnit\TestCaseTrait;
+
 
 class TestsWithFixture extends TestCase
 {
+    
+    use TestCaseTrait;
+
     
     //  ----------------------------------------------------------------------------
     
@@ -47,17 +54,19 @@ class TestsWithFixture extends TestCase
     
     protected function getSetUpOperation()
     {
-        return new PHPUnit_Extensions_Database_Operation_Composite(array(
+        return new Composite([
             new DBOperationSetEnv('foreign_key_checks',0),
-            parent::getSetUpOperation(),
+            Factory::CLEAN_INSERT(),
             new DBOperationSetEnv('foreign_key_checks',1),
-        ));
+        ]);
     }
     
     
     public function getDataSet()
     {
-        return  $this->createXMLDataSet(__DIR__ . DIRECTORY_SEPARATOR .'fixture.xml');
+        $aData  =  $this->createXMLDataSet(__DIR__ . DIRECTORY_SEPARATOR .'fixture.xml');
+        
+        return $aData;
     }
     
     
@@ -114,38 +123,8 @@ class TestsWithFixture extends TestCase
     
     protected $app;
 
-    /**
-    * PHPUnit setUp for setting up the application.
-    *
-    * Note: Child classes that define a setUp method must call
-    * parent::setUp().
-    */
-    public function setUp()
-    {
-        parent::setUp();
-    }
+  
 
-    /**
-    * Creates the application.
-    *
-    * @return HttpKernel
-    */
-    public function createApplication()
-    {
-        return null;
-    }
-
-    /**
-    * Creates a Client.
-    *
-    * @param array $server An array of server parameters
-    *
-    * @return Client A Client instance
-    */
-    public function createClient(array $server = array())
-    {
-        return new Client($this->app, $server);
-    }
     
 }
 /* End of File */

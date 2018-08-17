@@ -180,6 +180,10 @@ class TableGatewayTest extends TestsWithFixture
         
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
       
+      
+       $aResults = $this->getDoctrineConnection()->fetchAll('select * from users');
+       
+       
         
         $success = $mock_table->deleteQuery()
             ->start()
