@@ -22,7 +22,7 @@
     "require" : {
         "php": "^7.1",
         "ext-pdo": "*",
-        "symfony/event-dispatcher" : "^2.8",
+        "symfony/event-dispatcher" : "~3.4|~4.0",
         "doctrine/dbal"            : "^2.8",
         "doctrine/collections"     : "^1.5",
         "monolog/monolog"          : "^1.2"
