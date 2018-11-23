@@ -1,5 +1,5 @@
 {
-    "name": "vladshut/dbal-gateway",
+    "name": "icomefromthenet/dbal-gateway",
     "description": "Table Gateway for Doctrine DBAL",
     "keywords": [ "doctine","database","gateway" ],
     "homepage": "http://github.com/icomefromthenet/DBALGateway",
