@@ -1,3 +1,5 @@
+[![Build Status](https://api.travis-ci.com/icomefromthenet/DBALGateway.svg?branch=master)](https://app.travis-ci.com/github/icomefromthenet/DBALGateway)
+
 # DBALGateway - Table Gateway for Doctrine DBAL.
 [Doctrine DBAL](http://www.doctrine-project.org/projects/dbal.html) is a fantastic extension to PDO but writing CRUD code for simple 1 to 1 mappings still represents a time sink. This component implements [Table Gateway](http://martinfowler.com/eaaCatalog/tableDataGateway.html) on top of Doctrine DBAL and is heavily inspired by zf2 Table Gateway.
 
