@@ -1,4 +1,4 @@
-USE dbal_gateway;
+USE db;
 
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,

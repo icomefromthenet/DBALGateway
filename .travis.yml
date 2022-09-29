@@ -1,12 +1,12 @@
 language: php
 php:
-  - 7.1
+  - 7.4
   
    
 before_script:
-  - composer install --dev
-  - mysql -e 'CREATE DATABASE dbal_gateway;'
-  - mysql dbal_gateway < sql/database.sql 
+  - composer install 
+  - mysql -e 'CREATE DATABASE db;'
+  - mysql db < sql/database.sql 
   
   
 script: phpunit --configuration travis.xml
