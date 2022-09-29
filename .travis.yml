@@ -9,5 +9,4 @@ before_script:
   - mysql -e 'CREATE DATABASE db;'
   - mysql db < sql/database.sql 
   
-  
 script: vendor/bin/phpunit --configuration travis.xml
