@@ -10,4 +10,4 @@ before_script:
   - mysql db < sql/database.sql 
   
   
-script: phpunit --configuration travis.xml
+script: vendor/bin/phpunit --configuration travis.xml
