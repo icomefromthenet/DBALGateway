@@ -8,5 +8,6 @@ before_script:
   - composer install 
   - mysql -e 'CREATE DATABASE db;'
   - mysql db < sql/database.sql 
+  - mysql db < sql/fixture.sql 
   
 script: vendor/bin/phpunit --configuration travis.xml
