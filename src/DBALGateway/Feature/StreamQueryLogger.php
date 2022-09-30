@@ -6,7 +6,7 @@ use DBALGateway\Table\TableEvents;
 use DBALGateway\Table\TableEvent;
 use DBALGateway\Exception as GatewayException;
 use Doctrine\DBAL\Logging\SQLLogger;
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use \Closure;
 
 /**
@@ -28,14 +28,14 @@ class StreamQueryLogger implements EventSubscriberInterface , SQLLogger
     protected $start;
     
     /**
-      *  @var current index of the last query 
+      *  @var integer current index of the last query 
       */
     public $currentQuery = 0;
     
     /**
-      *  @var Monolog\Logger the logger instance
+      *  @var LoggerInterface the logger instance
       */
-    protected $monolog;
+    protected $logger;
     
     /**
       *  @var array[] the last query 
@@ -51,9 +51,9 @@ class StreamQueryLogger implements EventSubscriberInterface , SQLLogger
     }
     
     
-    public function __construct(Logger $monolog)
+    public function __construct(LoggerInterface $logger)
     {
-        $this->monolog = $monolog;
+        $this->logger = $logger;
     }
     
 
@@ -94,7 +94,7 @@ class StreamQueryLogger implements EventSubscriberInterface , SQLLogger
         $this->queries[$this->currentQuery]['executionMS'] = microtime(true) - $this->start;
         
         # call the output format closure
-        $this->monolog->addInfo($this->queries[$this->currentQuery]['sql'],array(
+        $this->logger->info($this->queries[$this->currentQuery]['sql'],array(
                                        'execution' => $this->queries[$this->currentQuery]['executionMS'],
                                        'params'    => $this->queries[$this->currentQuery]['params']
                                 ));
@@ -102,8 +102,7 @@ class StreamQueryLogger implements EventSubscriberInterface , SQLLogger
         # save last query for one more iteration
         $this->last_query = $this->queries[$this->currentQuery];
         
-        # remove query for buffer
-        unset($this->queries[$this->currentQuery++]);
+        
     }
     
     //------------------------------------------------------------------
@@ -124,7 +123,7 @@ class StreamQueryLogger implements EventSubscriberInterface , SQLLogger
     public function __destruct()
     {
         unset($this->last_query);
-        unset($this->monolog);
+        unset($this->logger);
         unset($this->queries);
     }
     

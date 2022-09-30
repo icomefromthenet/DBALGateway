@@ -33,7 +33,7 @@ class BufferedQueryLogger implements EventSubscriberInterface , SQLLogger
     protected $max = 5;
     
     /**
-      *  @var current index of the last query 
+      *  @var integer current index of the last query 
       */
     public $currentQuery = 0;
     

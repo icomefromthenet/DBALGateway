@@ -149,7 +149,7 @@ abstract class AbstractQuery extends QueryBuilder implements QueryInterface
     public function ifThen($bBool, $fn)
     {
         if(false === is_callable($fn)) {
-            throw new RuntimeException ('Expected a callable');
+            throw new \RuntimeException ('Expected a callable');
         }
         
         // call the lambda with the query builder as argument
@@ -164,7 +164,7 @@ abstract class AbstractQuery extends QueryBuilder implements QueryInterface
     public function ifThenElse($bBool, $fn1, $fn2)
     {
         if(false === is_callable($fn1) || false === is_callable($fn2)) {
-            throw new RuntimeException ('Expected a callable');
+            throw new \RuntimeException ('Expected a callable');
         }
         
         // call the lambda with the query builder as argument

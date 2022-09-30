@@ -180,7 +180,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
                 
             }
             
-        } catch(DBALException $e) {
+        } catch(\Exception $e) {
             throw new GatewayException($e->getMessage());
         }
         
@@ -215,7 +215,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
                 }     
             }
             
-        } catch(DBALException $e) {
+        } catch(\Exception $e) {
             throw new GatewayException($e->getMessage());
         }
         
@@ -248,7 +248,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
                 $this->last_insert_id = $this->adapter->lastInsertId();     
             }
             
-        } catch(DBALException $e) {
+        } catch(\Exception $e) {
             throw new GatewayException($e->getMessage());
         }
               
@@ -279,7 +279,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
                 $result = true;
             }
             
-        } catch(DBALException $e) {
+        } catch(\Exception $e) {
             throw new GatewayException($e->getMessage());
         }
         
@@ -310,7 +310,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
             }
             
             
-        } catch(DBALException $e) {
+        } catch(\Exception $e) {
             throw new GatewayException($e->getMessage());
         }
         
@@ -481,9 +481,9 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
       *  Create a new instance of the querybuilder
       *
       *  @access public
-      *  @return QueryBuilder
+      *  @return \DBALGateway\Query\AbstractQuery
       */
-    abstract public function newQueryBuilder();
+    abstract public function newQueryBuilder() : \DBALGateway\Query\AbstractQuery;
     
     
     /**

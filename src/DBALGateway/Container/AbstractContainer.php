@@ -13,7 +13,7 @@ abstract class AbstractContainer
     protected $gateway;
     
     /**
-      *  @var QueryBuilder the query class 
+      *  @var AbstractQuery the query class 
       */
     protected $query;
     
@@ -27,7 +27,7 @@ abstract class AbstractContainer
       *  Class Constructor
       *
       *  @param TableInterface $table
-      *  @param QueryBuilder $query
+      *  @param AbstractQuery $query
       */
     public function __construct(TableInterface $gateway, AbstractQuery $query = null, $sAlias = '')
     {
@@ -52,12 +52,12 @@ abstract class AbstractContainer
     }
     
     /**
-      *  Return the interal QueryBuilder
+      *  Return the interal AbstractQuery
       *
       *  @access public
-      *  @return DBALGateway\AbstractQuery\QueryBuilder
+      *  @return DBALGateway\Query\AbstractQuery
       */
-    public function getQuery()
+    public function getQuery() : AbstractQuery
     {
         return $this->query;
     }
