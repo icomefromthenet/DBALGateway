@@ -12,7 +12,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testImplementsFactoryInterface()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $this->assertInstanceOf('DBALGateway\Table\ContainerFactoryInterface',$mock);
@@ -22,7 +22,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testMethodRetunsInsertContainer()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $this->assertInstanceOf('DBALGateway\Container\InsertContainer',$mock->insertQuery());
@@ -30,7 +30,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testMethodRetunsUpdateContainer()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $this->assertInstanceOf('DBALGateway\Container\UpdateContainer',$mock->updateQuery());
@@ -38,7 +38,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testMethodRetunsDeleteContainer()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $this->assertInstanceOf('DBALGateway\Container\DeleteContainer',$mock->deleteQuery());
@@ -46,7 +46,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testMethodRetunsSelectContainer()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $this->assertInstanceOf('DBALGateway\Container\SelectContainer',$mock->selectQuery());
@@ -55,7 +55,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testAbstractContainerProperties()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         $mock_query = $this->createMock('DBALGateway\Query\AbstractQuery',array(),array($this->getDoctrineConnection(),$mock_table));
         
@@ -72,7 +72,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testInsertContainerProperties()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $insert_container = $mock_table->insertQuery();
@@ -82,22 +82,23 @@ class ContainerFactoryTest extends TestsWithFixture
         $this->assertEquals($mock_table,$insert_container->end()); 
     }
     
-    /**
-      *  @expectedException DBALGateway\Exception
-      *  @expectedExceptionMessage column name bad_column not found under table users unable to add to insert statement
-      */
+    
     public function testInsertContainerExceptionAtMissingColumn()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $insert_container = $mock_table->insertQuery();
+
+        $this->expectException('DBALGateway\Exception');
+        $this->expectExceptionMessage('column name bad_column not found under table users unable to add to insert statement');
+
         $insert_container->addColumn('bad_column',null);
     }
     
     public function testInsertContainerAddColumn()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $username = 'myuser';
@@ -136,7 +137,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testUpdateContainerProperties()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $update_container = $mock_table->updateQuery();
@@ -147,22 +148,23 @@ class ContainerFactoryTest extends TestsWithFixture
     }
     
     
-    /**
-      *  @expectedException DBALGateway\Exception
-      *  @expectedExceptionMessage column name bad_column not found under table users unable to add to update statement
-      */
+    
     public function testUpdateContainerExceptionAtMissingColumn()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
+        $this->expectException('DBALGateway\Exception');
+        $this->expectExceptionMessage('column name bad_column not found under table users unable to add to update statement');
+
+
         $update_container = $mock_table->updateQuery()->start()->addColumn('bad_column',null);
     }
     
     
     public function testUpdateContainerAddColumn()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $username = 'myuser';
@@ -191,7 +193,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testDeleteContainerProperties()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $delete_container = $mock_table->deleteQuery();
@@ -204,7 +206,7 @@ class ContainerFactoryTest extends TestsWithFixture
     public function testDeleteContainerQuery()
     {
         
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_table->setTableQueryAlias('a');     
@@ -224,7 +226,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testSelectQueryProperties()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $select_container = $mock_table->selectQuery();
@@ -235,7 +237,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testSelectQuery()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $select_query = $mock_table->selectQuery()
@@ -248,7 +250,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testSelectQueryWithAlias()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_table->setTableQueryAlias('a');
@@ -267,7 +269,7 @@ class ContainerFactoryTest extends TestsWithFixture
     
     public function testSelectQueryExtraHelpers()
     {
-        $mock_event = $this->createMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
+        $mock_event = $this->createMock('Psr\EventDispatcher\EventDispatcherInterface');
         $mock_table = new MockUserTableGateway('users',$this->getDoctrineConnection(),$mock_event,$this->getTableMetaData());
         
         $mock_table->setTableQueryAlias('a');

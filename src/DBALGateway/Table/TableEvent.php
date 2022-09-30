@@ -1,7 +1,7 @@
 <?php
 namespace DBALGateway\Table;
 
-use Symfony\Component\EventDispatcher\Event;
+
 use DBALGateway\Table\TableInterface;
 
 /**
@@ -10,7 +10,7 @@ use DBALGateway\Table\TableInterface;
   *  @author Lewis Dyer <getintouch@icomefromthenet.com>
   *  @since 0.0.1
   */
-class TableEvent extends Event
+class TableEvent 
 {
     /**
       *  @var TableInterface the table instance 
@@ -21,6 +21,11 @@ class TableEvent extends Event
       *  @var mixed the result  
       */
     protected $result;
+
+    /**
+     * @var string the name of the table event
+     */
+    protected $eventName;
     
     /**
       *  Class Constructor
@@ -28,10 +33,11 @@ class TableEvent extends Event
       *  @access public
       *  @param TableInterface $table
       */
-    public function __construct(TableInterface $table, $result = null)
+    public function __construct(TableInterface $table, string $eventName, $result = null)
     {
         $this->table  = $table;
         $this->result = $result;
+        $this->eventName = $eventName;
     }
     
     /**
@@ -54,6 +60,16 @@ class TableEvent extends Event
     public function getResult()
     {
         return $this->result;
+    }
+
+    /**
+     * Return the event name
+     * 
+     * @return the event Name From TableEvents::xxxxx
+     */
+    public function getTableEvent() : string
+    {
+      return $this->eventName;
     }
     
 }

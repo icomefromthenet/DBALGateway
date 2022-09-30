@@ -16,7 +16,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
+
+
 
 /**
   *  Base Class for table gateways
@@ -42,7 +44,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
     protected $table_name;
     
     /**
-      *  @var EventDispatcherInterface
+      *  @var Psr\EventDispatcher\EventDispatcherInterface
       */
     protected $event_dispatcher;
     
@@ -127,9 +129,9 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
       */
     public function initilize()
     {
-        $this->event_dispatcher->dispatch(TableEvents::PRE_INITIALIZE,new TableEvent($this));
+        $this->event_dispatcher->dispatch(new TableEvent($this,TableEvents::PRE_INITIALIZE));
         $this->initilizeAction();
-        $this->event_dispatcher->dispatch(TableEvents::POST_INITIALIZE,new TableEvent($this));
+        $this->event_dispatcher->dispatch(new TableEvent($this,TableEvents::POST_INITIALIZE));
         
         $this->clear();
         return $this;
@@ -156,7 +158,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
       */
     public function find()
     {
-        $this->event_dispatcher->dispatch(TableEvents::PRE_SELECT,new TableEvent($this));
+        $this->event_dispatcher->dispatch(new TableEvent($this, TableEvents::PRE_SELECT));
         
         $result = array();
         
@@ -183,7 +185,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
         }
         
         
-        $this->event_dispatcher->dispatch(TableEvents::POST_SELECT,new TableEvent($this,$result));
+        $this->event_dispatcher->dispatch(new TableEvent($this,TableEvents::POST_SELECT, $result));
         
         $this->clear();
         return $result;
@@ -198,7 +200,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
       */
     public function findOne()
     {
-        $this->event_dispatcher->dispatch(TableEvents::PRE_SELECT,new TableEvent($this));
+        $this->event_dispatcher->dispatch(new TableEvent($this, TableEvents::PRE_SELECT));
         $result = null;
         
         try {
@@ -217,7 +219,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
             throw new GatewayException($e->getMessage());
         }
         
-        $this->event_dispatcher->dispatch(TableEvents::POST_SELECT,new TableEvent($this,$result));
+        $this->event_dispatcher->dispatch(new TableEvent($this,TableEvents::POST_SELECT, $result));
         
         $this->clear();
         
@@ -237,7 +239,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
         $result = false;
         $this->affected = 0;
         
-        $this->event_dispatcher->dispatch(TableEvents::PRE_INSERT,new TableEvent($this));
+        $this->event_dispatcher->dispatch(new TableEvent($this, TableEvents::PRE_INSERT));
         
         try {
             
@@ -251,7 +253,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
         }
               
         
-        $this->event_dispatcher->dispatch(TableEvents::POST_INSERT,new TableEvent($this,$result));
+        $this->event_dispatcher->dispatch(new TableEvent($this,TableEvents::POST_INSERT,$result));
         
         $this->clear();
         return $result;
@@ -269,7 +271,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
         $result = false;
         $this->affected = 0;
      
-        $this->event_dispatcher->dispatch(TableEvents::PRE_DELETE,new TableEvent($this));
+        $this->event_dispatcher->dispatch(new TableEvent($this, TableEvents::PRE_DELETE));
         
         try {
             
@@ -281,7 +283,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
             throw new GatewayException($e->getMessage());
         }
         
-        $this->event_dispatcher->dispatch(TableEvents::POST_DELETE,new TableEvent($this,$result));
+        $this->event_dispatcher->dispatch(new TableEvent($this,TableEvents::POST_DELETE, $result));
         
         $this->clear();
         return $result;
@@ -299,7 +301,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
         $result = null;
         $this->affected = 0;
         
-        $this->event_dispatcher->dispatch(TableEvents::PRE_UPDATE,new TableEvent($this));
+        $this->event_dispatcher->dispatch(new TableEvent($this, TableEvents::PRE_UPDATE));
         
         try {
             
@@ -312,7 +314,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
             throw new GatewayException($e->getMessage());
         }
         
-        $this->event_dispatcher->dispatch(TableEvents::POST_UPDATE,new TableEvent($this,$result));
+        $this->event_dispatcher->dispatch(new TableEvent($this,TableEvents::POST_UPDATE, $result));
         
         $this->clear();
         
@@ -424,7 +426,7 @@ abstract class AbstractTable implements ContainerFactoryInterface, TableInterfac
       *   @access public
       *   @return EventDispatcherInterface
       */
-    public function getEventDispatcher()
+    public function getEventDispatcher() : EventDispatcherInterface
     {
         return $this->event_dispatcher;
     }

@@ -94,7 +94,7 @@ class GatewayProxyCollection implements IteratorAggregate
     #IteratorAggregate 
     
     
-    public function getIterator()
+    public function getIterator() : \Traversable
     {
         return new ArrayIterator($this->aGatewayColection);
     }

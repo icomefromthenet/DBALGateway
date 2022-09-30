@@ -5,7 +5,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use DBALGateway\Builder\BuilderInterface;
 
 
@@ -127,7 +127,7 @@ interface TableInterface
       *
       *   @access public
       *   @return TableInterface
-      *   @param EventDispatcher $dispatcher
+      *   @param \Psr\EventDispatcher\EventDispatcherInterface $dispatcher
       */
     public function setEventDispatcher(EventDispatcherInterface $dispatcher);
     
@@ -138,7 +138,7 @@ interface TableInterface
       *   @access public
       *   @return EventDispatcher
       */
-    public function getEventDispatcher();
+    public function getEventDispatcher() : EventDispatcherInterface;
     
     /**
       *   Sets the result object that cloned on each select query

@@ -79,7 +79,7 @@ abstract class AbstractContainer
      * @param string    $sAlias The Optional alis
      * @return string the alias field
      */ 
-    public function convertToAliasField($sAlias = '',$sField)
+    public function convertToAliasField($sAlias,$sField)
     {
        $sAliasField = $sField;
        if(false === empty($sAlias)) {

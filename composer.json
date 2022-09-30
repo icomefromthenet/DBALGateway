@@ -14,19 +14,20 @@
     ],
     
     "require-dev" : {
-        "phpunit/phpunit"           : "^7",
-        "phpunit/dbunit"            : "^4.0"
+        "phpunit/phpunit"           : "^9",
+        "symfony/event-dispatcher"  : "^6.1"
         
     },
     
     "require" : {
-        "php": "^7.4",
+        "php": "^8",
         "ext-pdo": "*",
-        "symfony/event-dispatcher" : "^2.8",
-        "doctrine/dbal"            : "^2.8",
-        "doctrine/collections"     : "^1.5",
-        "monolog/monolog"          : "^1.2"
+        "psr/event-dispatcher"     : "^1.0",  
+        "doctrine/dbal"            : "^3.4",
+        "doctrine/collections"     : "^1.7",
+        "monolog/monolog"          : "^3.2"
     },
+    
     
     "autoload": {
         "psr-0": {
